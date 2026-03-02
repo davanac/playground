@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Archives coloniales belges — Recherche &amp; Chronologie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --sepia: #8B7355;
+  --sepia-light: #C4A97D;
+  --sepia-dark: #5C4A32;
+  --bg: #FAF8F5;
+  --surface: #F3EDE4;
+  --surface2: #EBE3D7;
+  --border: #D4C9B8;
+  --text: #2C2418;
+  --muted: #6B5D4E;
+  --muted2: #9A8C7B;
+  --accent: #8B2500;
+  --accent-light: #B33A00;
+}
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--sepia-dark);
+  color: #FAF8F5;
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+
+.header-top {
+  padding: 20px 48px 16px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.logo small {
+  display: block;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-top: 2px;
+}
+
+/* ── NAV TABS ── */
+.nav-tabs {
+  display: flex;
+  padding: 0 48px;
+  gap: 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.nav-tab {
+  padding: 12px 24px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.5);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-bottom: 2px solid transparent;
+}
+.nav-tab:hover { color: rgba(255,255,255,0.8); }
+.nav-tab.active {
+  color: white;
+  border-bottom-color: var(--sepia-light);
+}
+
+/* ── VIEWS ── */
+.view { display: none; }
+.view.active { display: block; }
+
+/* ══════════════════════════════════
+   TIMELINE VIEW
+   ══════════════════════════════════ */
+.timeline-intro {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 48px 48px 32px;
+  text-align: center;
+}
+.timeline-intro h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--sepia-dark);
+}
+.timeline-intro p {
+  color: var(--muted);
+  font-size: 16px;
+  font-weight: 300;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Period filter */
+.period-filters {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 48px 32px;
+  flex-wrap: wrap;
+}
+.period-btn {
+  padding: 8px 20px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: white;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.period-btn:hover { border-color: var(--sepia); color: var(--sepia); }
+.period-btn.active {
+  background: var(--sepia-dark);
+  color: white;
+  border-color: var(--sepia-dark);
+}
+
+/* Timeline axis */
+.timeline {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 48px 80px;
+  position: relative;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 80px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+
+.tl-event {
+  position: relative;
+  padding-left: 120px;
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.5s ease forwards;
+}
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tl-year {
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 65px;
+  text-align: right;
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--sepia);
+}
+
+.tl-dot {
+  position: absolute;
+  left: 74px;
+  top: 8px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--sepia);
+  border: 3px solid var(--bg);
+  box-shadow: 0 0 0 2px var(--sepia);
+  z-index: 2;
+}
+.tl-dot.major {
+  width: 18px; height: 18px;
+  left: 72px; top: 6px;
+  background: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.tl-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px 24px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  transition: box-shadow 0.2s;
+}
+.tl-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.tl-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--sepia-dark);
+}
+.tl-card .tl-date {
+  font-size: 12px;
+  color: var(--muted2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+.tl-card p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.tl-card .tl-period-tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 10px;
+}
+.tl-period-tag.eic { background: #F3E5D0; color: #8B5E3C; }
+.tl-period-tag.cb { background: #D6E5E0; color: #3B6B5C; }
+.tl-period-tag.ind { background: #E0D5E8; color: #5B3A7A; }
+
+.tl-card .tl-links {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.tl-link {
+  font-size: 11px;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--sepia);
+  transition: all 0.2s;
+}
+.tl-link:hover { background: var(--surface); border-color: var(--sepia); }
+
+/* ══════════════════════════════════
+   SEARCH VIEW
+   ══════════════════════════════════ */
+.search-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px;
+}
+
+.search-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.search-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  margin-bottom: 12px;
+  color: var(--sepia-dark);
+}
+.search-header p {
+  color: var(--muted);
+  font-weight: 300;
+  font-size: 16px;
+}
+
+.search-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.search-input {
+  flex: 1;
+  padding: 14px 20px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 15px;
+  font-family: 'Source Sans 3', sans-serif;
+  background: white;
+  color: var(--text);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.search-input:focus {
+  outline: none;
+  border-color: var(--sepia);
+  box-shadow: 0 0 0 3px rgba(139,115,85,0.12);
+}
+.search-input::placeholder { color: var(--muted2); }
+
+.search-btn {
+  padding: 14px 28px;
+  background: var(--sepia-dark);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.search-btn:hover { background: var(--sepia); }
+.search-btn:disabled { background: var(--muted2); cursor: wait; }
+
+/* Source selector */
+.source-selector {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.source-btn {
+  padding: 6px 16px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: white;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.source-btn:hover { border-color: var(--sepia); }
+.source-btn.active {
+  background: var(--sepia-dark);
+  color: white;
+  border-color: var(--sepia-dark);
+}
+
+/* Suggested searches */
+.suggestions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.suggestion {
+  padding: 6px 14px;
+  border: 1px dashed var(--border);
+  border-radius: 4px;
+  background: none;
+  font-size: 12px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-style: italic;
+}
+.suggestion:hover { border-color: var(--sepia); color: var(--sepia); border-style: solid; }
+
+/* Results */
+.results-info {
+  font-size: 13px;
+  color: var(--muted2);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.result-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.result-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+.result-thumb {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  background: var(--surface);
+  display: block;
+}
+.result-thumb.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted2);
+  font-size: 13px;
+}
+
+.result-body {
+  padding: 14px 16px;
+}
+.result-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--sepia-dark);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.result-meta {
+  font-size: 11px;
+  color: var(--muted2);
+}
+.result-source {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: var(--surface);
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+/* Loading */
+.loading-spinner {
+  text-align: center;
+  padding: 48px;
+  color: var(--muted2);
+}
+.spinner {
+  width: 32px; height: 32px;
+  border: 3px solid var(--border);
+  border-top-color: var(--sepia);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 0 auto 12px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.no-results {
+  text-align: center;
+  padding: 48px;
+  color: var(--muted2);
+  font-style: italic;
+}
+
+/* ══════════════════════════════════
+   SOURCES VIEW
+   ══════════════════════════════════ */
+.sources-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px;
+}
+.sources-container h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  margin-bottom: 12px;
+  text-align: center;
+  color: var(--sepia-dark);
+}
+.sources-container > p {
+  text-align: center;
+  color: var(--muted);
+  font-weight: 300;
+  margin-bottom: 40px;
+}
+
+.source-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 24px;
+  margin-bottom: 16px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  transition: box-shadow 0.2s;
+}
+.source-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+
+.source-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+  width: 48px;
+  text-align: center;
+}
+.source-info h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+.source-info h3 a {
+  color: var(--sepia-dark);
+  text-decoration: none;
+}
+.source-info h3 a:hover { color: var(--accent); }
+.source-info .source-desc {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.source-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.source-tag {
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: var(--surface);
+  color: var(--muted);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .header-top { padding: 16px 20px 12px; }
+  .nav-tabs { padding: 0 20px; }
+  .nav-tab { padding: 10px 14px; font-size: 12px; }
+  .timeline { padding: 0 20px 60px; }
+  .timeline::before { left: 20px; }
+  .tl-event { padding-left: 52px; }
+  .tl-year { position: static; width: auto; text-align: left; margin-bottom: 4px; }
+  .tl-dot { left: 14px; }
+  .tl-dot.major { left: 12px; }
+  .search-container, .sources-container { padding: 32px 20px; }
+  .search-bar { flex-direction: column; }
+  .results-grid { grid-template-columns: 1fr 1fr; }
+  .source-card { flex-direction: column; }
+  .timeline-intro { padding: 32px 20px 24px; }
+  .period-filters { padding: 0 20px 24px; }
+}
+@media (max-width: 480px) {
+  .results-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="logo">
+      Archives coloniales belges
+      <small>Congo · Rwanda · Burundi · 1885–1962</small>
+    </div>
+  </div>
+  <nav class="nav-tabs">
+    <button class="nav-tab active" onclick="switchView('timeline')">Chronologie</button>
+    <button class="nav-tab" onclick="switchView('search')">Recherche d'archives</button>
+    <button class="nav-tab" onclick="switchView('sources')">Sources</button>
+  </nav>
+</header>
+
+<!-- ═══════════════════════════════════════
+     TIMELINE VIEW
+     ═══════════════════════════════════════ -->
+<div class="view active" id="view-timeline">
+  <div class="timeline-intro">
+    <h1>Chronologie du passé colonial belge</h1>
+    <p>De la Conférence de Berlin (1884) aux indépendances (1962), les événements clés de la colonisation belge en Afrique centrale.</p>
+  </div>
+
+  <div class="period-filters">
+    <button class="period-btn active" data-period="all" onclick="filterPeriod('all')">Tout (1884–1962)</button>
+    <button class="period-btn" data-period="eic" onclick="filterPeriod('eic')">État indépendant du Congo</button>
+    <button class="period-btn" data-period="cb" onclick="filterPeriod('cb')">Congo belge</button>
+    <button class="period-btn" data-period="ind" onclick="filterPeriod('ind')">Indépendances</button>
+  </div>
+
+  <div class="timeline" id="timeline"></div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SEARCH VIEW
+     ═══════════════════════════════════════ -->
+<div class="view" id="view-search">
+  <div class="search-container">
+    <div class="search-header">
+      <h1>Recherche dans les archives</h1>
+      <p>Explorez les collections numérisées de Wikimedia Commons, Europeana et Internet Archive.</p>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" class="search-input" id="search-input" placeholder="Ex : Congo belge, Léopoldville, caoutchouc, Lumumba…" />
+      <button class="search-btn" id="search-btn" onclick="performSearch()">Rechercher</button>
+    </div>
+
+    <div class="source-selector">
+      <button class="source-btn active" data-source="wikimedia" onclick="setSource('wikimedia')">Wikimedia Commons</button>
+      <button class="source-btn" data-source="europeana" onclick="setSource('europeana')">Europeana</button>
+      <button class="source-btn" data-source="internet-archive" onclick="setSource('internet-archive')">Internet Archive</button>
+    </div>
+
+    <div class="suggestions">
+      <button class="suggestion" onclick="quickSearch('Belgian Congo photographs')">Photos du Congo belge</button>
+      <button class="suggestion" onclick="quickSearch('Léopoldville')">Léopoldville</button>
+      <button class="suggestion" onclick="quickSearch('Force Publique Congo')">Force Publique</button>
+      <button class="suggestion" onclick="quickSearch('Congo Free State rubber')">Caoutchouc rouge</button>
+      <button class="suggestion" onclick="quickSearch('Lumumba independence')">Lumumba</button>
+      <button class="suggestion" onclick="quickSearch('Ruanda-Urundi colonial')">Ruanda-Urundi</button>
+      <button class="suggestion" onclick="quickSearch('Elisabethville Katanga')">Élisabethville</button>
+      <button class="suggestion" onclick="quickSearch('Congo belge carte postale')">Cartes postales</button>
+    </div>
+
+    <div id="search-results"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SOURCES VIEW
+     ═══════════════════════════════════════ -->
+<div class="view" id="view-sources">
+  <div class="sources-container">
+    <h1>Sources &amp; archives en ligne</h1>
+    <p>Principales collections numériques accessibles gratuitement pour la recherche sur le passé colonial belge.</p>
+
+    <div class="source-card">
+      <div class="source-icon">🖼️</div>
+      <div class="source-info">
+        <h3><a href="https://commons.wikimedia.org/wiki/Category:Belgian_Congo" target="_blank">Wikimedia Commons</a></h3>
+        <p class="source-desc">Photographies, cartes, documents numérisés liés au Congo belge, à l'État indépendant du Congo et au Ruanda-Urundi. Contenu libre de droits ou sous licence Creative Commons.</p>
+        <div class="source-tags">
+          <span class="source-tag">Photos</span>
+          <span class="source-tag">Cartes</span>
+          <span class="source-tag">Documents</span>
+          <span class="source-tag">Domaine public</span>
+          <span class="source-tag">API gratuite</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-icon">🏛️</div>
+      <div class="source-info">
+        <h3><a href="https://www.europeana.eu/fr/search?query=Belgian%20Congo" target="_blank">Europeana</a></h3>
+        <p class="source-desc">Agrégateur européen de collections patrimoniales. Photographies coloniales, archives missionnaires, cartes militaires provenant de musées et bibliothèques européennes.</p>
+        <div class="source-tags">
+          <span class="source-tag">Photos</span>
+          <span class="source-tag">Manuscrits</span>
+          <span class="source-tag">Objets</span>
+          <span class="source-tag">API REST</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-icon">📚</div>
+      <div class="source-info">
+        <h3><a href="https://archive.org/search?query=Belgian+Congo" target="_blank">Internet Archive</a></h3>
+        <p class="source-desc">Livres numérisés, documents administratifs, rapports d'enquêtes. Inclut le rapport Casement, les rapports de la Commission d'enquête et des ouvrages d'époque complets.</p>
+        <div class="source-tags">
+          <span class="source-tag">Livres</span>
+          <span class="source-tag">Documents</span>
+          <span class="source-tag">Rapports</span>
+          <span class="source-tag">Domaine public</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-icon">📷</div>
+      <div class="source-info">
+        <h3><a href="https://www.africamuseum.be/fr/research/collections-library" target="_blank">AfricaMuseum (Tervuren)</a></h3>
+        <p class="source-desc">Musée royal de l'Afrique centrale. Plus de 500 000 photographies de l'époque coloniale, objets ethnographiques, archives scientifiques et administratives.</p>
+        <div class="source-tags">
+          <span class="source-tag">Photos</span>
+          <span class="source-tag">Objets</span>
+          <span class="source-tag">Archives</span>
+          <span class="source-tag">CC-BY</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-icon">📰</div>
+      <div class="source-info">
+        <h3><a href="https://www.belgicapress.be" target="_blank">BelgicaPress (KBR)</a></h3>
+        <p class="source-desc">136 journaux belges numérisés, plus de 4 millions de pages avec recherche plein texte OCR. La presse belge d'époque couvrant les affaires coloniales. Contenu pré-1918 en accès libre.</p>
+        <div class="source-tags">
+          <span class="source-tag">Journaux</span>
+          <span class="source-tag">OCR</span>
+          <span class="source-tag">Pré-1918 libre</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-icon">⚖️</div>
+      <div class="source-info">
+        <h3><a href="https://www.digicoljust.be" target="_blank">DIGICOLJUST</a></h3>
+        <p class="source-desc">27 650 pages numérisées de tribunaux militaires coloniaux (1891-1956). Archives judiciaires de l'État indépendant du Congo et du Congo belge en accès ouvert.</p>
+        <div class="source-tags">
+          <span class="source-tag">Archives judiciaires</span>
+          <span class="source-tag">1891-1956</span>
+          <span class="source-tag">Accès ouvert</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-icon">🗂️</div>
+      <div class="source-info">
+        <h3><a href="https://search.arch.be" target="_blank">Archives de l'État en Belgique</a></h3>
+        <p class="source-desc">9,5 kilomètres linéaires d'archives coloniales. Inventaires en ligne via AGATHA. Consultation sur place principalement, mais inventaires et guides consultables en ligne.</p>
+        <div class="source-tags">
+          <span class="source-tag">Archives administratives</span>
+          <span class="source-tag">Inventaires</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-icon">🎨</div>
+      <div class="source-info">
+        <h3><a href="https://www.getty.edu/art/collection/search?q=belgian+congo" target="_blank">Getty Research Institute</a></h3>
+        <p class="source-desc">Album « Views of the Belgian Congo, 1908-1909 » sous licence CC0 (domaine public). Téléchargement haute résolution disponible.</p>
+        <div class="source-tags">
+          <span class="source-tag">Photos</span>
+          <span class="source-tag">CC0</span>
+          <span class="source-tag">Haute résolution</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// TIMELINE DATA
+// ══════════════════════════════════════════
+const EVENTS = [
+  { year: 1884, date: '15 novembre 1884', period: 'eic', major: true,
+    title: 'Conférence de Berlin',
+    desc: 'Les puissances européennes se réunissent pour se partager l\'Afrique. Léopold II obtient la reconnaissance internationale de l\'État indépendant du Congo comme sa propriété personnelle.',
+    links: [{ label: 'Acte de Berlin (Wikisource)', url: 'https://fr.wikisource.org/wiki/Acte_g%C3%A9n%C3%A9ral_de_la_Conf%C3%A9rence_de_Berlin' }]
+  },
+  { year: 1885, date: '1er août 1885', period: 'eic', major: true,
+    title: 'Création de l\'État indépendant du Congo',
+    desc: 'Léopold II proclame la création de l\'État indépendant du Congo (EIC), un territoire 80 fois plus grand que la Belgique, placé sous sa souveraineté personnelle.',
+    links: [{ label: 'Carte EIC (Wikimedia)', url: 'https://commons.wikimedia.org/wiki/Category:Maps_of_the_Congo_Free_State' }]
+  },
+  { year: 1892, date: '1892', period: 'eic',
+    title: 'Guerres arabo-swahilies',
+    desc: 'L\'EIC entre en conflit avec les marchands arabo-swahilis de l\'est du Congo. Les campagnes militaires sont menées par la Force Publique sous commandement belge.',
+    links: []
+  },
+  { year: 1897, date: '1897', period: 'eic',
+    title: 'Exposition coloniale de Tervuren — « Zoo humain »',
+    desc: 'Lors de l\'Exposition universelle de Bruxelles, 267 Congolais sont exhibés dans le parc de Tervuren. Sept d\'entre eux y périssent. L\'événement marque la naissance du futur Musée de l\'Afrique centrale.',
+    links: [{ label: 'AfricaMuseum — Histoire', url: 'https://www.africamuseum.be/fr/discover/history' }]
+  },
+  { year: 1891, date: '1891–1906', period: 'eic', major: true,
+    title: 'Le « caoutchouc rouge » — Terreur dans l\'EIC',
+    desc: 'Le système de travail forcé pour l\'extraction du caoutchouc provoque des atrocités massives : mains coupées, prises d\'otages, massacres. La population congolaise décline de manière catastrophique.',
+    links: [{ label: 'Photos des atrocités (Wikimedia)', url: 'https://commons.wikimedia.org/wiki/Category:Atrocities_in_the_Congo_Free_State' }]
+  },
+  { year: 1903, date: '1903', period: 'eic',
+    title: 'Rapport Casement',
+    desc: 'Le consul britannique Roger Casement publie un rapport accablant sur les conditions de travail forcé et les atrocités au Congo, provoquant un scandale international.',
+    links: [{ label: 'Rapport Casement (Archive.org)', url: 'https://archive.org/search?query=casement+report+congo' }]
+  },
+  { year: 1904, date: '1904', period: 'eic',
+    title: 'Création de la Congo Reform Association',
+    desc: 'E.D. Morel et Roger Casement fondent la Congo Reform Association à Liverpool, l\'une des premières campagnes internationales pour les droits humains.',
+    links: [{ label: 'E.D. Morel (Wikimedia)', url: 'https://commons.wikimedia.org/wiki/Category:Edmund_Dene_Morel' }]
+  },
+  { year: 1905, date: '1905', period: 'eic',
+    title: 'Commission d\'enquête internationale',
+    desc: 'Sous la pression internationale, Léopold II accepte une commission d\'enquête qui confirme les abus systématiques. Il tente d\'en limiter la diffusion.',
+    links: []
+  },
+  { year: 1908, date: '15 novembre 1908', period: 'cb', major: true,
+    title: 'Annexion : le Congo belge',
+    desc: 'Sous la pression internationale, Léopold II cède l\'EIC à la Belgique. Le territoire devient le « Congo belge », une colonie d\'État. Certaines réformes sont entreprises, mais le système colonial perdure.',
+    links: [{ label: 'Charte coloniale (Wikisource)', url: 'https://fr.wikisource.org/wiki/Charte_coloniale_du_18_octobre_1908' }]
+  },
+  { year: 1916, date: '1916', period: 'cb',
+    title: 'Occupation du Ruanda-Urundi',
+    desc: 'Pendant la Première Guerre mondiale, les troupes belges occupent le Ruanda-Urundi, alors colonie allemande (Deutsch-Ostafrika).',
+    links: []
+  },
+  { year: 1921, date: '1921', period: 'cb',
+    title: 'Simon Kimbangu et le kimbanguisme',
+    desc: 'Le prophète Simon Kimbangu lance un mouvement religieux et anticolonial au Bas-Congo. Arrêté, il est condamné à mort (commuée en prison à vie). Il meurt en détention en 1951.',
+    links: [{ label: 'Kimbangu (Wikimedia)', url: 'https://commons.wikimedia.org/wiki/Category:Simon_Kimbangu' }]
+  },
+  { year: 1922, date: '1922', period: 'cb',
+    title: 'Mandat de la Société des Nations',
+    desc: 'La SDN confie le Ruanda-Urundi à la Belgique sous mandat. La Belgique renforce le système de classification ethnique Hutu-Tutsi-Twa.',
+    links: []
+  },
+  { year: 1925, date: '1925', period: 'cb',
+    title: 'Création du Parc national Albert',
+    desc: 'Premier parc national d\'Afrique, créé dans les montagnes des Virunga. Aujourd\'hui parc national des Virunga en RDC.',
+    links: []
+  },
+  { year: 1928, date: '1928', period: 'cb',
+    title: 'Union Minière du Haut-Katanga',
+    desc: 'L\'exploitation minière du Katanga (cuivre, cobalt, uranium) est au cœur de l\'économie coloniale. Des milliers de travailleurs sont recrutés de force.',
+    links: [{ label: 'Union Minière (Wikimedia)', url: 'https://commons.wikimedia.org/wiki/Category:Union_mini%C3%A8re_du_Haut-Katanga' }]
+  },
+  { year: 1931, date: '1931', period: 'cb',
+    title: 'Introduction de la carte d\'identité ethnique au Rwanda',
+    desc: 'L\'administration belge introduit des cartes d\'identité mentionnant l\'appartenance ethnique (Hutu, Tutsi, Twa), rigidifiant les catégories sociales.',
+    links: []
+  },
+  { year: 1944, date: 'Février 1944', period: 'cb',
+    title: 'Mutinerie de Luluabourg',
+    desc: 'Des soldats de la Force Publique se mutinent à Luluabourg contre les conditions de vie et les punitions corporelles. La révolte est violemment réprimée.',
+    links: []
+  },
+  { year: 1945, date: '1945', period: 'cb',
+    title: 'L\'uranium congolais et la bombe atomique',
+    desc: 'L\'uranium de la mine de Shinkolobwe (Katanga) fournit la matière première des bombes d\'Hiroshima et Nagasaki, un fait longtemps tenu secret.',
+    links: []
+  },
+  { year: 1946, date: '1946', period: 'cb',
+    title: 'Tutelle de l\'ONU sur le Ruanda-Urundi',
+    desc: 'Le mandat de la SDN est converti en tutelle des Nations Unies. La Belgique reste l\'administrateur du territoire.',
+    links: []
+  },
+  { year: 1950, date: '1950', period: 'cb',
+    title: 'Fondation de l\'ABAKO',
+    desc: 'Joseph Kasavubu fonde l\'Alliance des Bakongo (ABAKO), l\'une des premières organisations politiques congolaises qui deviendra un mouvement indépendantiste.',
+    links: []
+  },
+  { year: 1955, date: '1955', period: 'cb',
+    title: 'Plan Van Bilsen — « 30 ans pour le Congo »',
+    desc: 'Le professeur Jef Van Bilsen publie un plan proposant l\'indépendance du Congo en 30 ans. Jugé trop rapide par les colons, trop lent par les Congolais.',
+    links: []
+  },
+  { year: 1958, date: '1958', period: 'cb',
+    title: 'Expo 58 et création du MNC',
+    desc: 'L\'Exposition universelle de Bruxelles inclut un « village congolais » controversé. Patrice Lumumba fonde le Mouvement National Congolais (MNC).',
+    links: [{ label: 'Expo 58 Congo (Wikimedia)', url: 'https://commons.wikimedia.org/wiki/Category:Expo_58' }]
+  },
+  { year: 1959, date: '4 janvier 1959', period: 'ind', major: true,
+    title: 'Émeutes de Léopoldville',
+    desc: 'Des émeutes éclatent à Léopoldville après l\'interdiction d\'un meeting de l\'ABAKO. La répression fait des dizaines de morts. La Belgique comprend que l\'indépendance est inévitable.',
+    links: []
+  },
+  { year: 1959, date: 'Novembre 1959', period: 'ind',
+    title: 'Révolution sociale au Rwanda',
+    desc: 'La « Toussaint rwandaise » : soulèvement hutu contre la monarchie tutsi. Des milliers de Tutsis fuient le pays. La Belgique change d\'alliance et soutient les leaders hutus.',
+    links: []
+  },
+  { year: 1960, date: 'Janvier 1960', period: 'ind',
+    title: 'Table ronde belgo-congolaise',
+    desc: 'Réunie à Bruxelles, la table ronde fixe la date de l\'indépendance au 30 juin 1960. Lumumba, libéré de prison, y joue un rôle central.',
+    links: []
+  },
+  { year: 1960, date: '30 juin 1960', period: 'ind', major: true,
+    title: 'Indépendance du Congo',
+    desc: 'Le Congo accède à l\'indépendance. Lors de la cérémonie, le discours improvisé de Patrice Lumumba dénonce les humiliations coloniales devant le roi Baudouin.',
+    links: [{ label: 'Discours de Lumumba (Wikisource)', url: 'https://fr.wikisource.org/wiki/Discours_sur_l%E2%80%99ind%C3%A9pendance_du_Congo' }, { label: 'Photos indépendance (Wikimedia)', url: 'https://commons.wikimedia.org/wiki/Category:Independence_of_the_Democratic_Republic_of_the_Congo' }]
+  },
+  { year: 1960, date: '11 juillet 1960', period: 'ind', major: true,
+    title: 'Sécession du Katanga',
+    desc: 'Moïse Tshombe proclame l\'indépendance du Katanga avec le soutien de la Belgique et de l\'Union Minière. Début d\'une crise qui déstabilisera le jeune pays.',
+    links: []
+  },
+  { year: 1961, date: '17 janvier 1961', period: 'ind', major: true,
+    title: 'Assassinat de Patrice Lumumba',
+    desc: 'Le premier Premier ministre du Congo indépendant est assassiné au Katanga avec la complicité de la Belgique et de la CIA. Son corps est dissous dans de l\'acide.',
+    links: [{ label: 'Lumumba (Wikimedia)', url: 'https://commons.wikimedia.org/wiki/Category:Patrice_Lumumba' }]
+  },
+  { year: 1961, date: '28 janvier 1961', period: 'ind',
+    title: 'Renversement de la monarchie rwandaise',
+    desc: 'Le mwami (roi) Kigeli V est renversé. Le Rwanda devient une république dominée par les Hutus sous la supervision belge.',
+    links: []
+  },
+  { year: 1962, date: '1er juillet 1962', period: 'ind', major: true,
+    title: 'Indépendance du Rwanda et du Burundi',
+    desc: 'Les deux pays accèdent à l\'indépendance, mettant fin à la tutelle belge. Le Rwanda devient une république, le Burundi une monarchie constitutionnelle.',
+    links: []
+  }
+];
+
+// ══════════════════════════════════════════
+// TIMELINE RENDERING
+// ══════════════════════════════════════════
+const PERIOD_LABELS = { eic: 'État indépendant du Congo', cb: 'Congo belge', ind: 'Indépendances' };
+const PERIOD_CSS = { eic: 'eic', cb: 'cb', ind: 'ind' };
+
+function renderTimeline(period = 'all') {
+  const container = document.getElementById('timeline');
+  const events = period === 'all' ? EVENTS : EVENTS.filter(e => e.period === period);
+
+  container.innerHTML = events.map((e, i) => `
+    <div class="tl-event" style="animation-delay: ${i * 0.06}s">
+      <div class="tl-year">${e.year}</div>
+      <div class="tl-dot ${e.major ? 'major' : ''}"></div>
+      <div class="tl-card">
+        <div class="tl-date">${e.date}</div>
+        <h3>${e.title}</h3>
+        <p>${e.desc}</p>
+        <span class="tl-period-tag ${PERIOD_CSS[e.period]}">${PERIOD_LABELS[e.period]}</span>
+        ${e.links.length ? `<div class="tl-links">${e.links.map(l => `<a class="tl-link" href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`).join('')}</div>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterPeriod(period) {
+  document.querySelectorAll('.period-btn').forEach(b => b.classList.toggle('active', b.dataset.period === period));
+  renderTimeline(period);
+}
+
+renderTimeline();
+
+// ══════════════════════════════════════════
+// VIEW SWITCHING
+// ══════════════════════════════════════════
+function switchView(view) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + view).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach((t, i) => {
+    t.classList.toggle('active', ['timeline','search','sources'][i] === view);
+  });
+}
+
+// ══════════════════════════════════════════
+// SEARCH ENGINE
+// ══════════════════════════════════════════
+let currentSource = 'wikimedia';
+
+function setSource(source) {
+  currentSource = source;
+  document.querySelectorAll('.source-btn').forEach(b => b.classList.toggle('active', b.dataset.source === source));
+}
+
+function quickSearch(query) {
+  document.getElementById('search-input').value = query;
+  performSearch();
+}
+
+async function performSearch() {
+  const query = document.getElementById('search-input').value.trim();
+  if (!query) return;
+
+  const results = document.getElementById('search-results');
+  const btn = document.getElementById('search-btn');
+  btn.disabled = true;
+
+  results.innerHTML = '<div class="loading-spinner"><div class="spinner"></div>Recherche en cours…</div>';
+
+  try {
+    if (currentSource === 'wikimedia') {
+      await searchWikimedia(query);
+    } else if (currentSource === 'europeana') {
+      await searchEuropeana(query);
+    } else {
+      await searchInternetArchive(query);
+    }
+  } catch (err) {
+    results.innerHTML = `<div class="no-results">Erreur lors de la recherche. Veuillez réessayer.<br><small>${err.message}</small></div>`;
+  }
+
+  btn.disabled = false;
+}
+
+// Wikimedia Commons search
+async function searchWikimedia(query) {
+  const url = `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(query + ' Belgian Congo OR Congo belge OR Ruanda-Urundi')}&gsrlimit=20&gsrnamespace=6&prop=imageinfo&iiprop=url|extmetadata|size&iiurlwidth=400&format=json&origin=*`;
+
+  const resp = await fetch(url);
+  const data = await resp.json();
+  const pages = data.query?.pages;
+
+  if (!pages) {
+    document.getElementById('search-results').innerHTML = '<div class="no-results">Aucun résultat trouvé sur Wikimedia Commons.</div>';
+    return;
+  }
+
+  const items = Object.values(pages).filter(p => p.imageinfo?.[0]).map(p => {
+    const info = p.imageinfo[0];
+    const meta = info.extmetadata || {};
+    return {
+      title: p.title.replace('File:', '').replace(/\.\w+$/, '').replace(/_/g, ' '),
+      thumb: info.thumburl || '',
+      url: info.descriptionurl || `https://commons.wikimedia.org/wiki/${p.title}`,
+      date: meta.DateTimeOriginal?.value?.substring(0, 10) || '',
+      source: 'Wikimedia Commons'
+    };
+  });
+
+  renderResults(items, 'Wikimedia Commons');
+}
+
+// Europeana search (redirect — no free CORS API without key)
+async function searchEuropeana(query) {
+  const searchUrl = `https://www.europeana.eu/fr/search?query=${encodeURIComponent(query + ' Belgian Congo')}`;
+
+  document.getElementById('search-results').innerHTML = `
+    <div class="results-info">Europeana nécessite une clé API pour la recherche directe. Cliquez ci-dessous pour ouvrir la recherche sur leur site.</div>
+    <div style="text-align:center;padding:32px;">
+      <a href="${searchUrl}" target="_blank" rel="noopener" style="
+        display:inline-block;padding:16px 32px;background:var(--sepia-dark);color:white;
+        border-radius:6px;text-decoration:none;font-weight:600;font-size:15px;
+      ">🏛️ Rechercher « ${query} » sur Europeana →</a>
+      <p style="margin-top:16px;color:var(--muted2);font-size:13px;">
+        Astuce : Europeana agrège des collections de musées et bibliothèques européennes.<br>
+        Filtrez par « Type : Image » et « Droits : Open » pour les résultats réutilisables.
+      </p>
+    </div>
+  `;
+}
+
+// Internet Archive search
+async function searchInternetArchive(query) {
+  const url = `https://archive.org/advancedsearch.php?q=${encodeURIComponent(query + ' (belgian congo OR congo belge OR ruanda-urundi)')}&fl[]=identifier&fl[]=title&fl[]=date&fl[]=mediatype&rows=20&output=json`;
+
+  const resp = await fetch(url);
+  const data = await resp.json();
+  const docs = data.response?.docs || [];
+
+  if (docs.length === 0) {
+    document.getElementById('search-results').innerHTML = '<div class="no-results">Aucun résultat trouvé sur Internet Archive.</div>';
+    return;
+  }
+
+  const items = docs.map(d => ({
+    title: d.title || d.identifier,
+    thumb: `https://archive.org/services/img/${d.identifier}`,
+    url: `https://archive.org/details/${d.identifier}`,
+    date: d.date?.substring(0, 10) || '',
+    source: `Internet Archive · ${d.mediatype || 'Document'}`
+  }));
+
+  renderResults(items, 'Internet Archive');
+}
+
+function renderResults(items, sourceName) {
+  const container = document.getElementById('search-results');
+
+  container.innerHTML = `
+    <div class="results-info">${items.length} résultat(s) trouvé(s) sur ${sourceName}</div>
+    <div class="results-grid">
+      ${items.map(item => `
+        <a class="result-card" href="${item.url}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">
+          <img class="result-thumb" src="${item.thumb}" alt="" loading="lazy" onerror="this.style.display='none'" />
+          <div class="result-body">
+            <div class="result-title">${item.title}</div>
+            <div class="result-meta">${item.date}</div>
+            <span class="result-source">${item.source}</span>
+          </div>
+        </a>
+      `).join('')}
+    </div>
+  `;
+}
+
+// Enter to search
+document.getElementById('search-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') performSearch();
+});
+</script>
+</body>
+</html>

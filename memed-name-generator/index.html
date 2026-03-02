@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MéMéd — Générateur de noms de projets IHECS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ihecs: #0083A9;
+  --ihecs-light: #00ADD0;
+  --ihecs-dark: #006778;
+  --bg: #ffffff;
+  --surface: #f5f7f8;
+  --surface2: #eef1f3;
+  --border: #d4dbe0;
+  --text: #2c2c2c;
+  --muted: #4D4F53;
+  --muted2: #8B8D8E;
+  --accent-warm: #FFA200;
+  --accent-green: #69BE28;
+  --accent-magenta: #C4014B;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* ── HEADER ── */
+header {
+  border-bottom: 3px solid var(--ihecs);
+  padding: 20px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+}
+
+.logo {
+  font-family: 'Fjalla One', sans-serif;
+  font-size: 24px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.logo em { color: var(--ihecs); font-style: normal; }
+
+.header-meta {
+  font-size: 12px;
+  color: var(--muted2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── MAIN ── */
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 56px 48px 80px;
+}
+
+/* ── INTRO ── */
+.intro {
+  margin-bottom: 56px;
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+}
+.intro-bar { width: 4px; background: var(--ihecs); flex-shrink: 0; align-self: stretch; border-radius: 2px; }
+.intro-text h1 {
+  font-family: 'Fjalla One', sans-serif;
+  font-size: 38px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  margin-bottom: 10px;
+  color: var(--ihecs-dark);
+}
+.intro-text p { color: var(--muted); font-size: 15px; max-width: 660px; }
+
+/* ── INPUT SECTION ── */
+.input-section {
+  margin-bottom: 48px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.input-header {
+  background: var(--ihecs);
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.input-pill {
+  font-family: 'Fjalla One', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.5);
+  padding: 5px 14px;
+  white-space: nowrap;
+  border-radius: 2px;
+}
+
+.input-title {
+  font-family: 'Fjalla One', sans-serif;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+
+.input-body { padding: 32px; }
+
+label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+textarea {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  padding: 16px;
+  resize: vertical;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  line-height: 1.6;
+  min-height: 120px;
+}
+textarea:focus {
+  outline: none;
+  border-color: var(--ihecs);
+  box-shadow: 0 0 0 3px rgba(0,131,169,0.12);
+}
+textarea::placeholder { color: var(--muted2); }
+
+.hint {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--muted2);
+  font-family: 'Lora', serif;
+  font-style: italic;
+}
+
+.btn-generate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 24px;
+  padding: 18px 40px;
+  background: var(--ihecs);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Fjalla One', sans-serif;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-generate:hover { background: var(--ihecs-dark); }
+.btn-generate:active { transform: scale(0.98); }
+.btn-generate:disabled {
+  background: var(--muted2);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── RESULT ── */
+.result-section {
+  display: none;
+  text-align: center;
+  padding: 48px 32px;
+  border: 2px solid var(--ihecs);
+  border-radius: 4px;
+  background: linear-gradient(135deg, rgba(0,131,169,0.04), rgba(0,173,208,0.04));
+  margin-bottom: 48px;
+}
+.result-section.visible { display: block; }
+
+.result-label {
+  font-size: 12px;
+  color: var(--muted2);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 20px;
+}
+
+.result-name {
+  font-family: 'Fjalla One', sans-serif;
+  font-size: 52px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  color: var(--ihecs);
+  margin-bottom: 24px;
+  animation: resultPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes resultPop {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.result-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.btn-action {
+  padding: 12px 28px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text);
+  font-family: 'Fjalla One', sans-serif;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-action:hover { border-color: var(--ihecs); color: var(--ihecs); }
+
+/* ── ALL NAMES LIST ── */
+.all-names {
+  display: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 48px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+.all-names.visible { display: block; }
+
+.all-names-header {
+  background: var(--surface);
+  padding: 14px 32px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'Fjalla One', sans-serif;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.all-names-list {
+  padding: 20px 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.name-chip {
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-family: 'Fjalla One', sans-serif;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.name-chip:hover {
+  border-color: var(--ihecs);
+  color: var(--ihecs);
+  background: rgba(0,131,169,0.04);
+}
+.name-chip.winner {
+  border-color: var(--ihecs);
+  background: rgba(0,131,169,0.08);
+  color: var(--ihecs);
+}
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center;
+  padding-top: 48px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--muted2);
+}
+.footer a { color: var(--muted); text-decoration: none; }
+.footer a:hover { color: var(--ihecs); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  main { padding: 32px 16px 64px; }
+  header { padding: 16px 20px; }
+  .intro { flex-direction: column; gap: 16px; }
+  .intro-bar { width: 100%; height: 4px; }
+  .result-name { font-size: 36px; }
+  .all-names-list { grid-template-columns: 1fr; }
+  .header-meta { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Mé<em>Méd</em></div>
+  <div class="header-meta">Générateur de noms · Projets IHECS</div>
+</header>
+
+<main>
+  <div class="intro">
+    <div class="intro-bar"></div>
+    <div class="intro-text">
+      <h1>Trouvez le nom de votre projet</h1>
+      <p>Décrivez votre projet en quelques phrases et découvrez des propositions de noms percutants, inspirés du style IHECS : jeux de mots, détournements d'expressions, portmanteaux et punchlines journalistiques.</p>
+    </div>
+  </div>
+
+  <!-- ── INPUT ── -->
+  <div class="input-section">
+    <div class="input-header">
+      <span class="input-pill">Étape 01</span>
+      <span class="input-title">Décrivez votre projet</span>
+    </div>
+    <div class="input-body">
+      <label for="description">De quoi parle votre projet ?</label>
+      <textarea id="description" placeholder="Ex : Notre projet explore la précarité alimentaire chez les étudiants universitaires en Belgique. On veut montrer comment les jeunes jonglent entre études et survie, entre resto U et banques alimentaires…"></textarea>
+      <p class="hint">Plus votre description est précise, plus les noms proposés seront pertinents. Mentionnez le sujet, l'angle, le public concerné.</p>
+      <button class="btn-generate" id="btn-generate" onclick="generate()">
+        <span>⟳</span> Générer des noms
+      </button>
+    </div>
+  </div>
+
+  <!-- ── RESULT ── -->
+  <div class="result-section" id="result-section">
+    <div class="result-label">✦ Nom sélectionné ✦</div>
+    <div class="result-name" id="result-name"></div>
+    <div class="result-actions">
+      <button class="btn-action" onclick="copyName()">📋 Copier</button>
+      <button class="btn-action" onclick="generate()">⟳ Nouveaux noms</button>
+    </div>
+  </div>
+
+  <!-- ── ALL NAMES ── -->
+  <div class="all-names" id="all-names">
+    <div class="all-names-header">Toutes les propositions</div>
+    <div class="all-names-list" id="all-names-list"></div>
+  </div>
+
+  <div class="footer">
+    <p>Inspiré des projets <a href="https://fund.ihecs.be/fr-FR/projects" target="_blank">IHECS Fund</a> · Outil pédagogique</p>
+  </div>
+</main>
+
+<script>
+// ══════════════════════════════════════════
+// STOP WORDS & THEME DETECTION
+// ══════════════════════════════════════════
+const STOP_WORDS = new Set([
+  'le','la','les','un','une','des','du','de','d','l','au','aux','ce','ces','cette',
+  'mon','ma','mes','ton','ta','tes','son','sa','ses','notre','nos','votre','vos','leur','leurs',
+  'je','tu','il','elle','on','nous','vous','ils','elles','me','te','se',
+  'et','ou','mais','donc','ni','car','que','qui','quoi','dont','où',
+  'dans','en','sur','sous','par','pour','avec','sans','chez','entre','vers','depuis',
+  'est','sont','a','ont','fait','faire','être','avoir','été','était','peut','doit',
+  'plus','moins','très','aussi','bien','mal','tout','tous','toute','toutes',
+  'pas','ne','n','y','c','s','qu','j',
+  'comment','pourquoi','quand','comme',
+  'projet','notre','veut','montrer','explorer','enquête','sujet','angle'
+]);
+
+const THEMES = {
+  environnement: ['climat','pollution','nature','eau','forêt','biodiversité','énergie','nucléaire','recyclage','déchets','carbone','écologie','planète','terre','vert','durable','animal','faune','flore','océan','mer','air','pesticide','agriculture','bio'],
+  social: ['inégalité','pauvreté','logement','migration','réfugié','sans-abri','précarité','solidarité','exclusion','discrimination','racisme','minorité','intégration','communauté','quartier','banlieue','classe','riche','pauvre','marginal','isolement','solitude'],
+  alimentation: ['alimentaire','nourriture','manger','faim','restaurant','cuisine','bio','agriculture','pesticide','fast-food','obésité','régime','vegan','viande','supermarché','gaspillage'],
+  santé: ['santé','mental','hôpital','médecin','maladie','psychologie','dépression','addiction','drogue','alcool','bien-être','burn','stress','anxiété','thérapie','soin','patient','euthanasie','handicap','autisme'],
+  justice: ['justice','prison','tribunal','droit','loi','crime','police','avocat','verdict','détenu','procès','victime','criminel','délinquance','garde','pénal','judiciaire','innocent','coupable'],
+  médias: ['média','journalisme','presse','information','fake','réseau','social','influenceur','podcast','radio','télévision','algorithme','propagande','censure','liberté','expression','image','écran','viral','buzz','tiktok','instagram','youtube'],
+  culture: ['art','musique','cinéma','théâtre','livre','danse','mode','design','photographie','patrimoine','musée','festival','hip-hop','rap','street','graffiti','urbain','tradition','identité','langue','folklore'],
+  éducation: ['école','université','étudiant','enseignement','formation','diplôme','apprentissage','jeune','adolescent','jeunesse','campus','bourse','décrochage','orientation','stage','études'],
+  sport: ['sport','football','athlète','compétition','dopage','supporter','match','olympique','boxe','basket','tennis','rugby','performance','club','entraîneur','stade','champion','défaite'],
+  technologie: ['technologie','numérique','intelligence','artificielle','données','algorithme','robot','cyber','startup','application','smartphone','internet','hacker','sécurité','surveillance','caméra','reconnaissance'],
+  politique: ['politique','démocratie','élection','gouvernement','parti','vote','parlement','pouvoir','militant','activisme','protestation','manifestation','révolution','corruption','lobby','populisme','extrême'],
+  genre: ['genre','féminisme','femme','homme','sexisme','égalité','lgbtq','queer','transgenre','sexualité','harcèlement','patriarcat','masculinité','intime','conjugal','couple','mariage'],
+  international: ['guerre','conflit','paix','réfugié','frontière','international','géopolitique','diplomatie','humanitaire','ong','terrorisme','armée','militaire','bombe','occupation','colonialisme','diaspora'],
+  économie: ['économie','travail','emploi','chômage','salaire','entreprise','capitalisme','finance','banque','dette','impôt','grève','syndicat','uber','précarité','inflation','crise'],
+  urbanisme: ['ville','urbain','quartier','banlieue','gentrification','immobilier','transport','mobilité','vélo','voiture','métro','trafic','logement','béton','architecture','espace','public']
+};
+
+// ══════════════════════════════════════════
+// NAME GENERATION ENGINE
+// ══════════════════════════════════════════
+
+// Templates that adapt to keywords
+function getTemplates(keywords) {
+  const kw = keywords.slice(0, 5);
+  const cap = w => w.charAt(0).toUpperCase() + w.slice(1);
+  const results = [];
+
+  for (const w of kw) {
+    const cw = cap(w);
+    results.push(
+      `${cw} en sursis`,
+      `${cw} sous tension`,
+      `L'envers du ${w}`,
+      `${cw}s perdus`,
+      `Contre-${w}`,
+      `${cw} à vif`,
+      `${cw}, off the record`,
+      `Les voix du ${w}`,
+      `${cw} à découvert`,
+      `${cw} en eaux troubles`,
+      `Hors ${w}`,
+      `${cw} mode d'emploi`,
+      `Au cœur du ${w}`,
+      `${cw} sans filtre`,
+      `Derrière le ${w}`,
+      `${cw} à huis clos`
+    );
+  }
+
+  // Combination templates (2 keywords)
+  if (kw.length >= 2) {
+    for (let i = 0; i < kw.length - 1; i++) {
+      for (let j = i + 1; j < kw.length; j++) {
+        const a = cap(kw[i]), b = cap(kw[j]);
+        results.push(
+          `${a} & ${b}`,
+          `De ${kw[i]} en ${kw[j]}`,
+          `${a} contre ${b}`,
+          `Entre ${kw[i]} et ${kw[j]}`
+        );
+      }
+    }
+  }
+
+  return results;
+}
+
+// French expression twists — the core IHECS naming style
+const EXPRESSION_TWISTS = {
+  environnement: [
+    'Vert de rage','Terre promise, terre perdue','L\'Effet de serre','En terrain miné',
+    'Courant d\'air','Le Prix du vert','Nature morte','Racines profondes',
+    'Eaux vives','Le Chant des forêts','Sous la canopée','Dernier souffle',
+    'Soleil noir','Le Grand dégel','Graines de colère','Marée haute',
+    'Débordements','L\'Heure verte','Cendres fertiles','Le Monde d\'après'
+  ],
+  social: [
+    'Ceux qui restent','Voisins invisibles','Hors cadre','L\'Autre côté',
+    'Portes closes','Murs porteurs','Les Oubliés','Entre les mailles',
+    'À la marge','Sans adresse','Terres d\'accueil','Le Fil rouge',
+    'Lignes de faille','En première ligne','Angle mort','Zone grise',
+    'Les Invisibles','Jeux de miroirs','Au bout du fil','Hors-jeu'
+  ],
+  alimentation: [
+    'À table !','Faim de mois','Les Affamés','Pain perdu',
+    'Goût amer','Table rase','La Part du gâteau','Miettes',
+    'Le Ventre vide','Bon appétit !','À la bonne franquette','Plat du jour',
+    'Digestion difficile','Cuisine interne','Menu fretin','Régime sec',
+    'Faux filet','L\'Assiette vide','Sur le pouce','Appétit de vivre'
+  ],
+  santé: [
+    'Maux croisés','Crise de nerfs','Sous perfusion','À bout de souffle',
+    'Hors d\'haleine','Effets secondaires','Chambre blanche','Dose maximale',
+    'Le Mal du siècle','Pression artérielle','Diagnostic vital','Sans ordonnance',
+    'Thérapie de choc','En rémission','Fièvre','Cicatrices',
+    'Blouses blanches','Au bord de la rupture','Point de suture','Rechute'
+  ],
+  justice: [
+    'Verdict suspendu','Peines perdues','Justice aveugle','Hors la loi',
+    'Le Dernier mot','Dossier classé','Prisons dorées','Libre sous caution',
+    'Le Poids de la preuve','À huis clos','Droits de l\'homme','Procès d\'intention',
+    'En sursis','Bavure','Acquittement','Non-lieu',
+    'Vice de procédure','Pièces à conviction','Mis en examen','Cellule de crise'
+  ],
+  médias: [
+    'Hors antenne','Fake it','En direct','Sous écoute',
+    'Signal faible','Écran total','La Fabrique du clic','Bruit de fond',
+    'Hors champ','Off the record','Derrière l\'écran','Mise au point',
+    'Flash info','Le Petit écran','Scroll infini','Double exposition',
+    'Point de vue','Zone de flou','En sourdine','Première page'
+  ],
+  culture: [
+    'Contrepoint','Les Coulisses','Acte final','En scène',
+    'Hors cadre','Faux-semblants','Ton sur ton','Cadence',
+    'Crescendo','Le Dernier acte','Rideau rouge','Tempo',
+    'Partition','L\'Envers du décor','En coulisses','Intermède',
+    'Rappel','Harmoniques','Sous les projecteurs','Champ libre'
+  ],
+  éducation: [
+    'Journal des classes','Copies blanches','Hors les murs','La Cour des grands',
+    'Cours magistral','Entre les lignes','Leçon de choses','Mauvais élèves',
+    'Bulletin de notes','Redoublement','La Sonnerie','Récréation permanente',
+    'Salle d\'examen','Orientation forcée','Banc d\'essai','L\'Amphi vide',
+    'Rentrée des classes','L\'Épreuve','En retenue','Moyenne générale'
+  ],
+  sport: [
+    'Pressing constant','Hors-jeu','Temps mort','Carton rouge',
+    'Prolongations','Arrêt de jeu','Ligne de touche','Sur le banc',
+    'Coup franc','La Remontée','Match retour','Terrain glissant',
+    'Au pied du mur','Score final','Hors course','Les Remplaçants',
+    'Vestiaires','Après le coup de sifflet','Droit au but','Mi-temps'
+  ],
+  technologie: [
+    'Ctrl+Z','Bug système','Hors connexion','En mode avion',
+    'Crash test','Algorithme fatal','Data limite','Le Code source',
+    'Déconnectés','Interface','Mises à jour','Page not found',
+    'En veille','Défaut de fabrication','Obsolescence','Circuit fermé',
+    'Reboot','Sans fil','Écran noir','Format inconnu'
+  ],
+  politique: [
+    'L\'Urne vide','Jeu de pouvoir','Lignes de partis','Gauche-droite',
+    'En campagne','Vote blanc','Sous couvert','Main invisible',
+    'Couloirs du pouvoir','L\'Opposition','Session plénière','Off the record',
+    'Démocratie en veille','Le Banc des accusés','Question de confiance','Majorité silencieuse',
+    'Le Cinquième pouvoir','Motion de censure','Sans étiquette','Petit arrangement'
+  ],
+  genre: [
+    'À contre-cœur','Les Non-dites','Tabou','Double standard',
+    'Corps à corps','Ligne rouge','Consentement','Zones d\'ombre',
+    'Le Silence des unes','Intime conviction','Mots couverts','Jeux de rôles',
+    'Sous le tapis','Permission accordée','Parole libérée','Le Plafond',
+    'Dress code','Miroir déformant','En terrain intime','Rapport de force'
+  ],
+  international: [
+    'Terre brûlée','Échos lointains','Le Rideau de fer','Lignes de front',
+    'Zone tampon','Les Exilés','Terre d\'asile','Passage interdit',
+    'Frontières invisibles','Le Dernier refuge','En territoire inconnu','Sous les bombes',
+    'Les Déracinés','Ceux d\'en face','Le Camp','Retour au pays',
+    'Lettre de l\'étranger','La Ligne verte','Diplomatie de l\'ombre','Pas de côté'
+  ],
+  économie: [
+    'Le Prix à payer','Compte à rebours','Main-d\'œuvre','À crédit',
+    'Le Grand fossé','Taux d\'usure','Heure supplémentaire','Fin de mois',
+    'Le Petit commerce','Valeur ajoutée','Sans filet','Cadence infernale',
+    'Le Juste prix','Marché noir','Liquidation','Fonds perdus',
+    'En faillite','La Note','Sous le comptoir','Dividendes'
+  ],
+  urbanisme: [
+    'Béton brut','Les Murs parlent','Hors zone','Plan B',
+    'Dernière station','Impasse','Sens interdit','Voie sans issue',
+    'La Ligne 3','Les Passagers','Terminus','Bitume',
+    'Place publique','Au coin de la rue','Bruit de ville','Zone blanche',
+    'Cul-de-sac','Haut débit','Sous le pont','Droit de passage'
+  ]
+};
+
+// Universal/fallback names that work for any topic
+const UNIVERSAL = [
+  'Point de rupture','Zone d\'ombre','Hors radar','L\'Angle mort',
+  'En surface','Sans filet','Le Fil rouge','Double fond',
+  'Faux départ','Ligne de crête','Entre deux feux','Signal d\'alarme',
+  'En suspens','Face cachée','Décalage','Le Non-dit',
+  'Sous la surface','Champ de vision','Contrechamp','État des lieux'
+];
+
+function extractKeywords(text) {
+  const normalized = text.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // remove accents for matching
+    .replace(/[^a-zàâäéèêëïîôùûüÿçœæ\s-]/gi, ' ');
+
+  const origWords = text.toLowerCase()
+    .replace(/[^a-zàâäéèêëïîôùûüÿçœæ\s-]/gi, ' ')
+    .split(/\s+/)
+    .filter(w => w.length > 2);
+
+  return origWords.filter(w => {
+    const clean = w.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    return !STOP_WORDS.has(clean) && clean.length > 2;
+  });
+}
+
+function detectThemes(keywords) {
+  const scores = {};
+  const normalizedKw = keywords.map(k => k.normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
+
+  for (const [theme, themeWords] of Object.entries(THEMES)) {
+    const normalizedTW = themeWords.map(t => t.normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
+    let score = 0;
+    for (const kw of normalizedKw) {
+      for (const tw of normalizedTW) {
+        if (kw.includes(tw) || tw.includes(kw)) score++;
+      }
+    }
+    if (score > 0) scores[theme] = score;
+  }
+
+  return Object.entries(scores)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(e => e[0]);
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function generateNames(description) {
+  const keywords = extractKeywords(description);
+  const themes = detectThemes(keywords);
+  const candidates = new Set();
+
+  // 1. Add themed expression twists (main source — IHECS style)
+  for (const theme of themes) {
+    const names = EXPRESSION_TWISTS[theme] || [];
+    shuffle(names).slice(0, 6).forEach(n => candidates.add(n));
+  }
+
+  // 2. Add template-based names using keywords
+  const templated = shuffle(getTemplates(keywords));
+  templated.slice(0, 6).forEach(n => candidates.add(n));
+
+  // 3. Fill with universal names if needed
+  if (candidates.size < 8) {
+    shuffle(UNIVERSAL).forEach(n => {
+      if (candidates.size < 12) candidates.add(n);
+    });
+  }
+
+  // If no theme detected, use more universals + templates
+  if (themes.length === 0) {
+    shuffle(UNIVERSAL).forEach(n => candidates.add(n));
+    // Add a random theme for variety
+    const randomTheme = shuffle(Object.keys(EXPRESSION_TWISTS))[0];
+    shuffle(EXPRESSION_TWISTS[randomTheme]).slice(0, 4).forEach(n => candidates.add(n));
+  }
+
+  // Return exactly 8 unique names
+  return shuffle([...candidates]).slice(0, 8);
+}
+
+// ══════════════════════════════════════════
+// MAIN FLOW
+// ══════════════════════════════════════════
+let currentNames = [];
+
+function showResult(name) {
+  const section = document.getElementById('result-section');
+  const nameEl = document.getElementById('result-name');
+  nameEl.textContent = name;
+  section.classList.add('visible');
+
+  // Remove and re-add animation class
+  nameEl.style.animation = 'none';
+  nameEl.offsetHeight; // trigger reflow
+  nameEl.style.animation = '';
+
+  // Highlight in all-names list
+  document.querySelectorAll('.name-chip').forEach(chip => {
+    chip.classList.toggle('winner', chip.textContent === name);
+  });
+}
+
+function generate() {
+  const desc = document.getElementById('description').value.trim();
+  if (!desc) {
+    document.getElementById('description').focus();
+    return;
+  }
+
+  // Generate names
+  currentNames = generateNames(desc);
+
+  // Show all names list
+  const allNames = document.getElementById('all-names');
+  const list = document.getElementById('all-names-list');
+  list.innerHTML = currentNames.map(n =>
+    `<div class="name-chip" onclick="selectName(this, '${n.replace(/'/g, "\\'")}')">${n}</div>`
+  ).join('');
+  allNames.classList.add('visible');
+
+  // Hide previous result
+  document.getElementById('result-section').classList.remove('visible');
+
+  // Scroll to names
+  allNames.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function selectName(chip, name) {
+  showResult(name);
+  document.getElementById('result-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function copyName() {
+  const name = document.getElementById('result-name').textContent;
+  navigator.clipboard.writeText(name).then(() => {
+    const btn = document.querySelector('.result-actions .btn-action');
+    const original = btn.textContent;
+    btn.textContent = '✓ Copié !';
+    setTimeout(() => btn.textContent = original, 1500);
+  });
+}
+</script>
+</body>
+</html>
