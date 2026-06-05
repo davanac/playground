@@ -67,12 +67,28 @@ Préparation publique appliquée (juin 2026). Domaine d'URL retenu : **`davanac.
 
 ⚠️ Si l'URL de publication change (déplacement hors du playground, domaine perso), mettre à jour les URLs absolues dans `<head>` (`og:url`, `og:image`, `twitter:image`, `canonical`). Les UIDs, eux, ne changent PAS (c'est voulu).
 
-## 6. Déploiement (GitHub Pages)
+## 6. Déploiement — double hébergement (GitHub Pages + Codeberg Pages)
 
-1. Placer `index.html` à la **racine** du repo (ou dans `/docs`).
-2. GitHub → **Settings → Pages** → Source : branche `main`, dossier `/ (root)` (ou `/docs`).
-3. URL par défaut : `https://<user>.github.io/<repo>/`.
-4. **Domaine perso** (recommandé) : ajouter un fichier `CNAME` à la racine contenant p. ex. `mondial.da.van.ac`, puis créer l'enregistrement DNS CNAME correspondant chez le registrar/host de `da.van.ac`. Forcer HTTPS dans les réglages Pages.
+Le repo `playground` est poussé sur **deux forges** (souveraineté) :
+
+**Remote `origin` = double-push** (configuré sur le laptop) :
+- fetch : `https://github.com/davanac/playground.git`
+- push  : GitHub (HTTPS) **+** `git@codeberg.org:davanac/playground.git` (SSH)
+- → `git push origin main` envoie le code sur **GitHub ET Codeberg** en une commande.
+
+**GitHub Pages** : workflow `.github/workflows/pages.yml` déploie tout le repo au push sur `main`.
+URL : `https://davanac.github.io/playground/mondial2026/`.
+
+**Codeberg Pages** : sert la branche **`pages`** du repo → URL `https://davanac.codeberg.page/playground/mondial2026/`.
+⚠️ La branche `pages` **ne se met PAS à jour** avec le double-push (qui ne touche que `main`). Après chaque mise à jour de `main`, rafraîchir Codeberg Pages avec :
+```
+git push git@codeberg.org:davanac/playground.git main:pages
+```
+Clés SSH Codeberg : `davanac-laptop` (laptop) et `imac-codeberg` (iMac), compte `davanac`.
+
+**Domaine perso** (optionnel) : `CNAME` à la racine (p. ex. `mondial.da.van.ac`) + DNS CNAME, forcer HTTPS. Côté Codeberg : fichier `.domains`.
+
+NB partage : les balises `og:image`/`canonical` pointent vers l'URL **GitHub** (canonique). Le site Codeberg fonctionne à 100 %, seuls les aperçus sociaux référencent GitHub.
 
 ## 7. Maintenance des données pendant le tournoi
 
