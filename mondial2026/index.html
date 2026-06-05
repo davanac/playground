@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0E3556">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<title>Coupe du Monde 2026 — Mon calendrier</title>
+<meta name="description" content="Compose ton calendrier de la Coupe du Monde 2026 : coche les matchs à suivre, ajoute-les à Google Agenda ou télécharge un .ics universel. Horaires en heure belge, rappel 15 min avant, diffusion RTBF Auvio.">
+<link rel="canonical" href="https://davanac.github.io/playground/mondial2026/">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_BE">
+<meta property="og:url" content="https://davanac.github.io/playground/mondial2026/">
+<meta property="og:title" content="Coupe du Monde 2026 — Mon calendrier">
+<meta property="og:description" content="Coche les matchs à suivre et exporte-les vers Google Agenda ou un .ics universel. Horaires en heure belge, rappel 15 min avant chaque match.">
+<meta property="og:image" content="https://davanac.github.io/playground/mondial2026/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Coupe du Monde 2026 — Mon calendrier">
+<meta name="twitter:description" content="Coche les matchs à suivre et exporte-les vers Google Agenda ou un .ics universel. Horaires en heure belge.">
+<meta name="twitter:image" content="https://davanac.github.io/playground/mondial2026/og-image.png">
+<style>
+  /* Polices auto-hébergées (souveraineté : aucune requête tierce) — Anton + DM Sans, sous-ensembles latin + latin-ext */
+  @font-face{font-family:'Anton';font-style:normal;font-weight:400;font-display:swap;
+    src:url(fonts/anton-latin.woff2) format('woff2');
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+  @font-face{font-family:'Anton';font-style:normal;font-weight:400;font-display:swap;
+    src:url(fonts/anton-latin-ext.woff2) format('woff2');
+    unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+  @font-face{font-family:'DM Sans';font-style:normal;font-weight:100 1000;font-display:swap;
+    src:url(fonts/dmsans-latin.woff2) format('woff2');
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+  @font-face{font-family:'DM Sans';font-style:normal;font-weight:100 1000;font-display:swap;
+    src:url(fonts/dmsans-latin-ext.woff2) format('woff2');
+    unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+  :root{
+    /* Charte dvnc — base navy */
+    --navy:#0E3556;            /* couleur de marque (wordmark & solidarité) */
+    --bg:#0a2a44;              /* fond, navy profond */
+    --panel:#0E3556;           /* cartes — navy canonique */
+    --panel2:#0c304e;          /* surface secondaire */
+    --line:#1c4a6c;            /* bordures */
+    --txt:#eef4fa;
+    --muted:#8ea8c0;
+    --ink:#082033;             /* encre sombre sur aplats vifs */
+    /* Accents de marque (5 piliers) */
+    --blue:#179FCD;            /* cyan — souveraineté */
+    --green:#4FB68D;           /* vert — imprévisibilité */
+    --yellow:#F1C26F;          /* jaune/pêche — mobilité */
+    --pink:#DC3E55;            /* rouge corail — factualité */
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased}
+  body{
+    background-image:
+      radial-gradient(900px 500px at 90% -10%, rgba(23,159,205,.12), transparent 60%),
+      radial-gradient(700px 500px at -10% 10%, rgba(220,62,85,.10), transparent 55%);
+    padding-bottom:120px;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 16px}
+
+  header.hero{padding:34px 0 20px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+  .kicker{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--green);font-weight:700;margin-bottom:8px}
+  h1{font-family:'Anton',sans-serif;font-weight:400;line-height:.92;letter-spacing:.01em;
+     font-size:clamp(42px,9vw,84px);text-transform:uppercase}
+  h1 .l1{color:var(--txt)}
+  h1 .l2{color:transparent;-webkit-text-stroke:1.5px var(--yellow);text-stroke:1.5px var(--yellow)}
+  .sub{color:var(--muted);margin-top:14px;max-width:560px;font-size:15px;line-height:1.5}
+  .herorow{display:flex;gap:20px;align-items:center;justify-content:space-between}
+  .herotext{flex:1;min-width:0}
+  .fifa-logo{flex:none;height:clamp(120px,23vw,210px);width:auto;display:block;
+             filter:drop-shadow(0 10px 28px rgba(0,0,0,.35))}
+  @media(max-width:520px){.herorow{gap:12px}.fifa-logo{height:104px}}
+  .flagrow{margin-top:16px;font-size:21px;line-height:1.55;letter-spacing:2px;opacity:.92}
+  .flagrow span{cursor:default}
+
+  /* sticky control bar */
+  .controls{position:sticky;top:0;z-index:30;background:rgba(10,14,26,.86);backdrop-filter:blur(10px);
+            border-bottom:1px solid var(--line);padding:12px 0;margin-top:0}
+  .searchrow{display:flex;gap:10px;align-items:center}
+  .search{flex:1;display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);
+          border-radius:12px;padding:10px 14px}
+  .search input{flex:1;background:none;border:none;color:var(--txt);font-size:15px;outline:none;font-family:inherit}
+  .search input::placeholder{color:var(--muted)}
+  .btn{font-family:inherit;font-weight:700;font-size:13px;border:none;border-radius:11px;padding:11px 14px;cursor:pointer;white-space:nowrap;transition:transform .08s ease,filter .15s ease}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:var(--panel);color:var(--txt);border:1px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--blue)}
+
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:12px 0 2px;scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;font-size:12.5px;font-weight:600;color:var(--muted);background:var(--panel);
+        border:1px solid var(--line);border-radius:999px;padding:7px 13px;cursor:pointer;transition:.15s}
+  .chip:hover{color:var(--txt)}
+  .chip.active{color:var(--ink);background:var(--green);border-color:var(--green);font-weight:700}
+  .chip.bel.active{background:var(--yellow);border-color:var(--yellow)}
+  .chip.fra.active{background:var(--blue);border-color:var(--blue);color:#fff}
+
+  .bulk{display:flex;gap:8px;flex-wrap:wrap;padding:10px 0 4px}
+  .bulk .btn.mini{background:transparent;color:var(--muted);border:1px dashed var(--line);font-weight:600;font-size:12px;padding:7px 11px}
+  .bulk .btn.mini:hover{color:var(--txt);border-color:var(--blue)}
+
+  .daygroup{margin-top:22px}
+  .dayhead{display:flex;align-items:baseline;gap:10px;margin:0 2px 10px;
+           border-left:3px solid var(--pink);padding-left:10px}
+  .dayhead .dn{font-family:'Anton',sans-serif;font-size:18px;text-transform:uppercase;letter-spacing:.02em}
+  .dayhead .dc{font-size:12px;color:var(--muted)}
+
+  .match{display:grid;grid-template-columns:26px 64px 1fr auto;gap:12px;align-items:center;
+         background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:12px 14px;margin-bottom:8px;
+         cursor:pointer;transition:border-color .15s,background .15s}
+  .match:hover{border-color:#2a5f86}
+  .match.sel{border-color:var(--green);background:linear-gradient(90deg,rgba(79,182,141,.12),var(--panel) 60%)}
+  .match.bel{box-shadow:inset 3px 0 0 var(--yellow)}
+  .match.fra{box-shadow:inset 3px 0 0 var(--blue)}
+
+  .cb{width:22px;height:22px;border-radius:7px;border:2px solid var(--line);display:grid;place-items:center;transition:.15s}
+  .match.sel .cb{background:var(--green);border-color:var(--green)}
+  .cb svg{width:13px;height:13px;opacity:0;transition:.15s}
+  .match.sel .cb svg{opacity:1}
+
+  .time{font-family:'Anton',sans-serif;font-size:20px;letter-spacing:.01em;line-height:1}
+  .time small{display:block;font-family:'DM Sans';font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.04em;margin-top:3px}
+  .time.night{color:var(--pink)}
+
+  .teams{font-size:15.5px;font-weight:600;line-height:1.25}
+  .teams .vs{color:var(--muted);font-weight:500;margin:0 5px}
+  .meta{font-size:11.5px;color:var(--muted);margin-top:3px}
+
+  .tag{font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);
+       border:1px solid var(--line);border-radius:7px;padding:4px 8px;white-space:nowrap}
+  .tag.ko{color:var(--yellow);border-color:rgba(241,194,111,.4)}
+
+  .empty{text-align:center;color:var(--muted);padding:50px 20px}
+
+  /* download bar */
+  .dock{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(13,19,32,.94);backdrop-filter:blur(12px);
+        border-top:1px solid var(--line);padding:14px 16px}
+  .dock .inner{max-width:920px;margin:0 auto;display:flex;align-items:center;gap:14px}
+  .count{font-family:'Anton',sans-serif;font-size:30px;line-height:1;color:var(--green)}
+  .count small{font-family:'DM Sans';font-size:12px;color:var(--muted);font-weight:600;display:block;margin-top:2px}
+  .dock .grow{flex:1}
+  .btn.glink{background:var(--green);color:var(--ink);font-size:15px;padding:14px 20px;border-radius:13px}
+  .btn.glink:hover{filter:brightness(1.05)}
+  .btn.glink:disabled{background:var(--line);color:var(--muted);cursor:not-allowed}
+  .btn.dl{background:var(--panel);color:var(--txt);border:1px solid var(--line);font-size:13.5px;padding:14px 15px;border-radius:13px}
+  .btn.dl:hover{border-color:var(--blue)}
+  .btn.dl:disabled{opacity:.45;cursor:not-allowed}
+  .modal{position:fixed;inset:0;z-index:80;background:rgba(5,8,16,.72);backdrop-filter:blur(4px);display:none;align-items:flex-end;justify-content:center}
+  .modal.open{display:flex}
+  .sheet{background:var(--panel);border:1px solid var(--line);border-radius:18px 18px 0 0;width:100%;max-width:560px;max-height:82vh;display:flex;flex-direction:column;padding:18px 18px 26px}
+  @media(min-width:700px){.modal{align-items:center}.sheet{border-radius:18px}}
+  .sheethead{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .sheethead .t{font-family:'Anton',sans-serif;font-size:20px;text-transform:uppercase}
+  .sheethead button{background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;line-height:1}
+  .gnote{font-size:12.5px;color:var(--muted);line-height:1.55;margin-bottom:12px}
+  .gnote b{color:var(--txt)}
+  .provtabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .provtabs button{font-family:inherit;font-weight:700;font-size:12.5px;color:var(--muted);
+    background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:7px 13px;cursor:pointer;transition:.15s}
+  .provtabs button:hover{color:var(--txt)}
+  .provtabs button.active{color:var(--ink);background:var(--blue);border-color:var(--blue)}
+  #glist{overflow-y:auto;display:flex;flex-direction:column;gap:7px}
+  .gi{display:flex;justify-content:space-between;align-items:center;gap:10px;text-decoration:none;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:11px 13px;color:var(--txt);font-size:14px;font-weight:600}
+  .gi:hover{border-color:var(--green)}
+  .gi .add{color:var(--green);font-weight:700;font-size:12.5px;white-space:nowrap}
+  .hint{font-size:11px;color:var(--muted);max-width:230px;line-height:1.35;display:none}
+  @media(min-width:700px){.hint{display:block}}
+
+  .toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);opacity:0;
+         background:var(--txt);color:var(--ink);font-weight:700;font-size:13px;padding:11px 18px;border-radius:11px;
+         transition:.3s;z-index:60;pointer-events:none;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  details.help{margin:20px auto 0;max-width:560px;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:4px 16px}
+  details.help summary{cursor:pointer;padding:12px 0;font-weight:700;font-size:14px;color:var(--blue);text-align:center}
+  details.help p{color:var(--muted);font-size:13.5px;line-height:1.6;padding:0 0 14px}
+  details.help b{color:var(--txt)}
+
+  footer.credits{margin:32px 2px 0;padding-top:20px;border-top:1px solid var(--line);
+                 color:var(--muted);font-size:12.5px;line-height:1.7}
+  footer.credits a{color:var(--blue);text-decoration:none}
+  footer.credits a:hover{text-decoration:underline}
+  footer.credits .note{display:block;margin-top:8px;font-size:11.5px;opacity:.85}
+
+  /* accessibilité : focus visible au clavier */
+  a:focus-visible,button:focus-visible,input:focus-visible,
+  .match:focus-visible,details.help summary:focus-visible{
+    outline:2px solid var(--blue);outline-offset:2px;border-radius:8px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="herorow">
+      <div class="herotext">
+        <div class="kicker">USA · Canada · Mexique — 11 juin ▸ 19 juillet 2026</div>
+        <h1><span class="l1">Coupe du Monde</span><br><span class="l2">2026</span></h1>
+        <p class="sub">Coche les matchs que tu veux suivre, puis télécharge ton fichier <b>.ics</b> à importer dans Google Agenda. Tous les horaires sont en <b>heure belge</b>, avec un rappel 15 min avant chaque match.</p>
+      </div>
+      <img class="fifa-logo" src="fifa-wc2026-logo.svg" alt="Emblème officiel de la Coupe du Monde de la FIFA 2026" width="32" height="48">
+    </div>
+    <div class="flagrow" id="flagrow" title="Les 48 nations qualifiées"></div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="wrap">
+    <div class="searchrow">
+      <div class="search">
+        <span style="color:var(--muted)" aria-hidden="true">🔎</span>
+        <input id="q" type="text" aria-label="Rechercher une équipe" placeholder="Rechercher une équipe (ex. Belgique, Brésil, Espagne…)">
+      </div>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="bulk">
+      <button class="btn mini" id="checkVisible">✓ Cocher les matchs affichés</button>
+      <button class="btn mini" id="uncheckAll">✕ Tout décocher</button>
+      <button class="btn mini" id="presetBel">🇧🇪 Diables Rouges</button>
+      <button class="btn mini" id="presetTop">⭐ Matchs phares</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap" id="list"></main>
+
+<footer class="credits">
+  <div class="wrap" style="padding:0">
+    Projet playground réalisé par Damien Van Achter — <a href="https://da.van.ac" target="_blank" rel="noopener">davanac</a>.
+    Source du calendrier&nbsp;: horaires UK Sky Sports, convertis en heure belge&nbsp;; matchs des Diables vérifiés via RTBF.
+    <span class="note">⚠️ Les affiches des phases à élimination directe s'affineront au fil du tournoi, à mesure que les groupes se terminent.</span>
+    <span class="note">Projet personnel et indépendant, sans aucun lien officiel avec la <b>FIFA</b> ni la <b>RTBF</b>. Les noms d'équipes, marques et le calendrier officiel restent la propriété de leurs détenteurs respectifs.</span>
+    <span class="note">Aucun compte, aucun tracker, aucune donnée stockée — tout se passe dans ton navigateur.</span>
+    <details class="help">
+      <summary>Comment importer le fichier .ics dans mon agenda&nbsp;?</summary>
+      <p><b>Google Agenda</b> (ordinateur)&nbsp;: ouvre <b>agenda.google.com</b> → roue dentée <b>⚙️ Paramètres</b> → <b>Importer et exporter</b> → sélectionne le fichier <b>.ics</b> téléchargé → choisis l'agenda de destination → <b>Importer</b>. Tous les matchs cochés apparaissent d'un coup.<br><br>
+      <b>Apple Calendar</b> (iPhone / Mac)&nbsp;: ouvre simplement le fichier <b>.ics</b> téléchargé&nbsp;; Calendrier propose d'ajouter les événements. Sur Mac, tu peux aussi le glisser dans l'app Calendrier.<br><br>
+      <b>Outlook / Proton / autres</b>&nbsp;: cherche l'option <b>Importer un calendrier</b> (ou « Importer .ics ») dans les réglages et sélectionne le fichier.<br><br>
+      Astuce&nbsp;: chaque match garde un identifiant <b>stable</b> — réimporter une version mise à jour du fichier <b>met à jour</b> les événements existants au lieu de créer des doublons (pratique quand les affiches des phases finales se précisent).</p>
+    </details>
+  </div>
+</footer>
+
+<div class="dock">
+  <div class="inner">
+    <div>
+      <div class="count" id="count">0</div>
+      <small id="countlbl">match sélectionné</small>
+    </div>
+    <div class="grow"></div>
+    <button class="btn dl" id="gbtn" disabled>🔗 Ajouter en ligne</button>
+    <button class="btn glink" id="download" disabled>⬇ .ics — tous agendas</button>
+  </div>
+</div>
+
+<div class="modal" id="gmodal">
+  <div class="sheet">
+    <div class="sheethead"><span class="t">Ajouter en ligne</span><button id="gclose" aria-label="Fermer">✕</button></div>
+    <p class="gnote">Choisis ton agenda, puis <b>Ajouter</b> pour chaque match (un onglet s'ouvre, tu enregistres).<br><b>Apple&nbsp;Calendar, Proton, Thunderbird</b>, ou pour <b>tout ajouter d'un coup</b>&nbsp;: utilise plutôt le bouton <b>.ics</b> (universel, sans compte).</p>
+    <div class="provtabs" id="provtabs"></div>
+    <div id="glist"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const FLAGS={
+ "Mexique":"🇲🇽","Afrique du Sud":"🇿🇦","Corée du Sud":"🇰🇷","Tchéquie":"🇨🇿","Canada":"🇨🇦",
+ "Bosnie-Herzégovine":"🇧🇦","États-Unis":"🇺🇸","Paraguay":"🇵🇾","Qatar":"🇶🇦","Suisse":"🇨🇭",
+ "Brésil":"🇧🇷","Maroc":"🇲🇦","Haïti":"🇭🇹","Écosse":"🏴󠁧󠁢󠁳󠁣󠁴󠁿","Australie":"🇦🇺","Turquie":"🇹🇷",
+ "Allemagne":"🇩🇪","Curaçao":"🇨🇼","Pays-Bas":"🇳🇱","Japon":"🇯🇵","Côte d'Ivoire":"🇨🇮",
+ "Équateur":"🇪🇨","Suède":"🇸🇪","Tunisie":"🇹🇳","Espagne":"🇪🇸","Cap-Vert":"🇨🇻","Belgique":"🇧🇪",
+ "Égypte":"🇪🇬","Arabie saoudite":"🇸🇦","Uruguay":"🇺🇾","Iran":"🇮🇷","Nouvelle-Zélande":"🇳🇿",
+ "France":"🇫🇷","Sénégal":"🇸🇳","Irak":"🇮🇶","Norvège":"🇳🇴","Argentine":"🇦🇷","Algérie":"🇩🇿",
+ "Autriche":"🇦🇹","Jordanie":"🇯🇴","Portugal":"🇵🇹","RD Congo":"🇨🇩","Angleterre":"🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+ "Croatie":"🇭🇷","Ghana":"🇬🇭","Panama":"🇵🇦","Colombie":"🇨🇴","Ouzbékistan":"🇺🇿"
+};
+// [n, "MM-DD", "HH:MM"(UK 24h), home, away, cat, label, loc]
+const RAW=[
+[1,"06-11","20:00","Mexique","Afrique du Sud","A","Groupe A","Mexico, Mexique"],
+[2,"06-12","03:00","Corée du Sud","Tchéquie","A","Groupe A","Zapopan, Mexique"],
+[3,"06-12","20:00","Canada","Bosnie-Herzégovine","B","Groupe B","Toronto, Canada"],
+[4,"06-13","02:00","États-Unis","Paraguay","D","Groupe D","Los Angeles, USA"],
+[5,"06-13","20:00","Qatar","Suisse","B","Groupe B","Santa Clara, USA"],
+[6,"06-13","23:00","Brésil","Maroc","C","Groupe C","New Jersey, USA"],
+[7,"06-14","02:00","Haïti","Écosse","C","Groupe C","Foxborough, USA"],
+[8,"06-14","05:00","Australie","Turquie","D","Groupe D","Vancouver, Canada"],
+[9,"06-14","18:00","Allemagne","Curaçao","E","Groupe E","Houston, USA"],
+[10,"06-14","21:00","Pays-Bas","Japon","F","Groupe F","Arlington, USA"],
+[11,"06-15","00:00","Côte d'Ivoire","Équateur","E","Groupe E","Philadelphie, USA"],
+[12,"06-15","03:00","Suède","Tunisie","F","Groupe F","Guadalupe, Mexique"],
+[13,"06-15","17:00","Espagne","Cap-Vert","H","Groupe H","Atlanta, USA"],
+[14,"06-15","20:00","Belgique","Égypte","G","Groupe G","Seattle, USA"],
+[15,"06-15","23:00","Arabie saoudite","Uruguay","H","Groupe H","Miami, USA"],
+[16,"06-16","02:00","Iran","Nouvelle-Zélande","G","Groupe G","Los Angeles, USA"],
+[17,"06-16","20:00","France","Sénégal","I","Groupe I","New Jersey, USA"],
+[18,"06-16","23:00","Irak","Norvège","I","Groupe I","Foxborough, USA"],
+[19,"06-17","02:00","Argentine","Algérie","J","Groupe J","Kansas City, USA"],
+[20,"06-17","05:00","Autriche","Jordanie","J","Groupe J","Santa Clara, USA"],
+[21,"06-17","18:00","Portugal","RD Congo","K","Groupe K","Houston, USA"],
+[22,"06-17","21:00","Angleterre","Croatie","L","Groupe L","Arlington, USA"],
+[23,"06-18","00:00","Ghana","Panama","L","Groupe L","Toronto, Canada"],
+[24,"06-18","03:00","Ouzbékistan","Colombie","K","Groupe K","Mexico, Mexique"],
+[25,"06-18","17:00","Tchéquie","Afrique du Sud","A","Groupe A","Atlanta, USA"],
+[26,"06-18","20:00","Suisse","Bosnie-Herzégovine","B","Groupe B","Los Angeles, USA"],
+[27,"06-18","23:00","Canada","Qatar","B","Groupe B","Vancouver, Canada"],
+[28,"06-19","02:00","Mexique","Corée du Sud","A","Groupe A","Zapopan, Mexique"],
+[29,"06-19","20:00","États-Unis","Australie","D","Groupe D","Seattle, USA"],
+[30,"06-19","23:00","Écosse","Maroc","C","Groupe C","Foxborough, USA"],
+[31,"06-20","01:30","Brésil","Haïti","C","Groupe C","Philadelphie, USA"],
+[32,"06-20","04:00","Turquie","Paraguay","D","Groupe D","Santa Clara, USA"],
+[33,"06-20","18:00","Pays-Bas","Suède","F","Groupe F","Houston, USA"],
+[34,"06-20","21:00","Allemagne","Côte d'Ivoire","E","Groupe E","Toronto, Canada"],
+[35,"06-21","01:00","Équateur","Curaçao","E","Groupe E","Kansas City, USA"],
+[36,"06-21","05:00","Tunisie","Japon","F","Groupe F","Guadalupe, Mexique"],
+[37,"06-21","17:00","Espagne","Arabie saoudite","H","Groupe H","Atlanta, USA"],
+[38,"06-21","20:00","Belgique","Iran","G","Groupe G","Los Angeles, USA"],
+[39,"06-21","23:00","Uruguay","Cap-Vert","H","Groupe H","Miami, USA"],
+[40,"06-22","02:00","Nouvelle-Zélande","Égypte","G","Groupe G","Vancouver, Canada"],
+[41,"06-22","18:00","Argentine","Autriche","J","Groupe J","Arlington, USA"],
+[42,"06-22","22:00","France","Irak","I","Groupe I","Philadelphie, USA"],
+[43,"06-23","01:00","Norvège","Sénégal","I","Groupe I","Toronto, Canada"],
+[44,"06-23","04:00","Jordanie","Algérie","J","Groupe J","Santa Clara, USA"],
+[45,"06-23","18:00","Portugal","Ouzbékistan","K","Groupe K","Houston, USA"],
+[46,"06-23","21:00","Angleterre","Ghana","L","Groupe L","Foxborough, USA"],
+[47,"06-24","00:00","Panama","Croatie","L","Groupe L","Foxborough, USA"],
+[48,"06-24","03:00","Colombie","RD Congo","K","Groupe K","Zapopan, Mexique"],
+[49,"06-24","20:00","Suisse","Canada","B","Groupe B","Vancouver, Canada"],
+[50,"06-24","20:00","Bosnie-Herzégovine","Qatar","B","Groupe B","Seattle, USA"],
+[51,"06-24","23:00","Maroc","Haïti","C","Groupe C","Atlanta, USA"],
+[52,"06-24","23:00","Écosse","Brésil","C","Groupe C","Miami, USA"],
+[53,"06-25","02:00","Afrique du Sud","Corée du Sud","A","Groupe A","Guadalupe, Mexique"],
+[54,"06-25","02:00","Tchéquie","Mexique","A","Groupe A","Mexico, Mexique"],
+[55,"06-25","21:00","Curaçao","Côte d'Ivoire","E","Groupe E","Philadelphie, USA"],
+[56,"06-25","21:00","Équateur","Allemagne","E","Groupe E","New Jersey, USA"],
+[57,"06-26","00:00","Tunisie","Pays-Bas","F","Groupe F","Kansas City, USA"],
+[58,"06-26","00:00","Japon","Suède","F","Groupe F","Arlington, USA"],
+[59,"06-26","03:00","Turquie","États-Unis","D","Groupe D","Los Angeles, USA"],
+[60,"06-26","03:00","Paraguay","Australie","D","Groupe D","Santa Clara, USA"],
+[61,"06-26","20:00","Norvège","France","I","Groupe I","Foxborough, USA"],
+[62,"06-26","20:00","Sénégal","Irak","I","Groupe I","Toronto, Canada"],
+[63,"06-27","01:00","Cap-Vert","Arabie saoudite","H","Groupe H","Houston, USA"],
+[64,"06-27","01:00","Uruguay","Espagne","H","Groupe H","Zapopan, Mexique"],
+[65,"06-27","04:00","Nouvelle-Zélande","Belgique","G","Groupe G","Vancouver, Canada"],
+[66,"06-27","04:00","Égypte","Iran","G","Groupe G","Seattle, USA"],
+[67,"06-27","22:00","Panama","Angleterre","L","Groupe L","New Jersey, USA"],
+[68,"06-27","22:00","Croatie","Ghana","L","Groupe L","Philadelphie, USA"],
+[69,"06-28","00:30","Colombie","Portugal","K","Groupe K","Miami, USA"],
+[70,"06-28","00:30","RD Congo","Ouzbékistan","K","Groupe K","Atlanta, USA"],
+[71,"06-28","03:00","Algérie","Autriche","J","Groupe J","Kansas City, USA"],
+[72,"06-28","03:00","Jordanie","Argentine","J","Groupe J","Arlington, USA"],
+[73,"06-28","20:00","2e Gr. A","2e Gr. B","R32","16e de finale","Los Angeles, USA"],
+[76,"06-29","18:00","Vainq. Gr. C","2e Gr. F","R32","16e de finale","Houston, USA"],
+[74,"06-29","21:30","Vainq. Gr. E","3e (A/B/C/D/F)","R32","16e de finale","Foxborough, USA"],
+[75,"06-30","02:00","Vainq. Gr. F","2e Gr. C","R32","16e de finale","Guadalupe, Mexique"],
+[78,"06-30","18:00","2e Gr. E","2e Gr. I","R32","16e de finale","Arlington, USA"],
+[77,"06-30","22:00","Vainq. Gr. I","3e (C/D/F/G/H)","R32","16e de finale","New Jersey, USA"],
+[79,"07-01","02:00","Vainq. Gr. A","3e (C/E/F/H/I)","R32","16e de finale","Mexico, Mexique"],
+[80,"07-01","17:00","Vainq. Gr. L","3e (E/H/I/J/K)","R32","16e de finale","Atlanta, USA"],
+[82,"07-01","21:00","Vainq. Gr. G","3e (A/E/H/I/J)","R32","16e de finale","Seattle, USA"],
+[81,"07-02","01:00","Vainq. Gr. D","3e (B/E/F/I/J)","R32","16e de finale","Santa Clara, USA"],
+[84,"07-02","20:00","Vainq. Gr. H","2e Gr. J","R32","16e de finale","Los Angeles, USA"],
+[83,"07-03","00:00","2e Gr. K","2e Gr. L","R32","16e de finale","Toronto, Canada"],
+[88,"07-03","19:00","2e Gr. D","2e Gr. G","R32","16e de finale","Arlington, USA"],
+[85,"07-03","04:00","Vainq. Gr. B","3e (E/F/G/I/J)","R32","16e de finale","Vancouver, Canada"],
+[86,"07-03","23:00","Vainq. Gr. J","2e Gr. H","R32","16e de finale","Miami, USA"],
+[87,"07-04","02:30","Vainq. Gr. K","3e (D/E/I/J/L)","R32","16e de finale","Kansas City, USA"],
+[90,"07-04","18:00","Vainq. M73","Vainq. M75","R16","8e de finale","Houston, USA"],
+[89,"07-04","22:00","Vainq. M74","Vainq. M77","R16","8e de finale","Philadelphie, USA"],
+[91,"07-05","21:00","Vainq. M76","Vainq. M78","R16","8e de finale","New Jersey, USA"],
+[92,"07-06","01:00","Vainq. M79","Vainq. M80","R16","8e de finale","Mexico, Mexique"],
+[93,"07-06","20:00","Vainq. M83","Vainq. M84","R16","8e de finale","Arlington, USA"],
+[94,"07-07","01:00","Vainq. M81","Vainq. M82","R16","8e de finale","Seattle, USA"],
+[95,"07-07","17:00","Vainq. M86","Vainq. M88","R16","8e de finale","Atlanta, USA"],
+[96,"07-07","21:00","Vainq. M85","Vainq. M87","R16","8e de finale","Vancouver, Canada"],
+[97,"07-09","21:00","Vainq. M89","Vainq. M90","QF","Quart de finale","Foxborough, USA"],
+[98,"07-10","20:00","Vainq. M93","Vainq. M94","QF","Quart de finale","Los Angeles, USA"],
+[99,"07-11","22:00","Vainq. M91","Vainq. M92","QF","Quart de finale","Miami, USA"],
+[100,"07-12","02:00","Vainq. M95","Vainq. M96","QF","Quart de finale","Kansas City, USA"],
+[101,"07-14","20:00","Vainq. M97","Vainq. M98","SF","Demi-finale","Arlington, USA"],
+[102,"07-15","20:00","Vainq. M99","Vainq. M100","SF","Demi-finale","Atlanta, USA"],
+[103,"07-18","22:00","Perdant M101","Perdant M102","BRONZE","Match 3e place","Miami, USA"],
+[104,"07-19","20:00","Vainq. M101","Vainq. M102","FINAL","Finale","New Jersey, USA"]
+];
+
+// stable UIDs matching the first .ics so re-import updates instead of duplicating
+const FIXED_UID={1:"cdm2026-ouverture@mondial.da.van.ac",14:"cdm2026-bel-egy@mondial.da.van.ac",38:"cdm2026-bel-irn@mondial.da.van.ac",65:"cdm2026-nzl-bel@mondial.da.van.ac",104:"cdm2026-finale@mondial.da.van.ac"};
+
+const matches=RAW.map(r=>{
+  const [n,md,hm,home,away,cat,label,loc]=r;
+  const iso=`2026-${md}T${hm}:00+01:00`;      // UK clock = BST (+01:00)
+  const dt=new Date(iso);
+  const isBEL=/Belgique/.test(home+away);
+  const isFRA=/France/.test(home+away);
+  return {n,dt,home,away,cat,label,loc,isBEL,isFRA,iso};
+}).sort((a,b)=>a.dt-b.dt);
+
+const selected=new Set();
+let filter={chip:"all",q:""};
+
+const fmtDay=new Intl.DateTimeFormat('fr-BE',{weekday:'long',day:'numeric',month:'long',timeZone:'Europe/Brussels'});
+const fmtKey=new Intl.DateTimeFormat('fr-CA',{year:'numeric',month:'2-digit',day:'2-digit',timeZone:'Europe/Brussels'});
+const fmtTime=new Intl.DateTimeFormat('fr-BE',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Europe/Brussels'});
+
+function flag(name){return FLAGS[name]||"";}
+function isNight(dt){const h=+fmtTime.format(dt).slice(0,2);return h>=0&&h<7;}
+
+const chipsDef=[
+ {id:"all",label:"Tous"},
+ {id:"bel",label:"🇧🇪 Belgique",cls:"bel"},
+ {id:"fra",label:"🇫🇷 France",cls:"fra"},
+ {id:"groups",label:"Phase de groupes"},
+ {id:"ko",label:"Phases finales"},
+ ...["A","B","C","D","E","F","G","H","I","J","K","L"].map(g=>({id:"g"+g,label:"Groupe "+g}))
+];
+
+function buildChips(){
+  const c=document.getElementById('chips');
+  c.innerHTML='';
+  chipsDef.forEach(d=>{
+    const b=document.createElement('button');
+    b.className='chip '+(d.cls||'')+(filter.chip===d.id?' active':'');
+    b.textContent=d.label;
+    b.onclick=()=>{filter.chip=d.id;buildChips();render();};
+    c.appendChild(b);
+  });
+}
+
+function passes(m){
+  if(filter.q){
+    const s=(m.home+' '+m.away).toLowerCase();
+    if(!s.includes(filter.q.toLowerCase()))return false;
+  }
+  const f=filter.chip;
+  if(f==="all")return true;
+  if(f==="bel")return m.isBEL;
+  if(f==="fra")return m.isFRA;
+  if(f==="groups")return m.cat.length===1;
+  if(f==="ko")return m.cat.length>1;
+  if(f[0]==="g")return m.cat===f.slice(1);
+  return true;
+}
+
+function render(){
+  const list=document.getElementById('list');
+  list.innerHTML='';
+  const vis=matches.filter(passes);
+  if(!vis.length){list.innerHTML='<div class="empty">Aucun match ne correspond à ta recherche.</div>';updateCount();return;}
+  let curKey=null,group=null;
+  vis.forEach(m=>{
+    const key=fmtKey.format(m.dt);
+    if(key!==curKey){
+      curKey=key;
+      group=document.createElement('div');group.className='daygroup';
+      const h=document.createElement('div');h.className='dayhead';
+      const dn=document.createElement('span');dn.className='dn';dn.textContent=fmtDay.format(m.dt);
+      h.appendChild(dn);
+      group.appendChild(h);
+      list.appendChild(group);
+    }
+    const row=document.createElement('div');
+    row.className='match'+(selected.has(m.n)?' sel':'')+(m.isBEL?' bel':'')+(m.isFRA?' fra':'');
+    const night=isNight(m.dt);
+    row.innerHTML=`
+      <div class="cb"><svg viewBox="0 0 24 24" fill="none" stroke="#082033" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <div class="time${night?' night':''}">${fmtTime.format(m.dt)}<small>${night?'🌙 nuit':'heure BE'}</small></div>
+      <div>
+        <div class="teams">${flag(m.home)} ${m.home}<span class="vs">–</span>${flag(m.away)} ${m.away}</div>
+        <div class="meta">📍 ${m.loc}</div>
+      </div>
+      <div class="tag${m.cat.length>1?' ko':''}">${m.label}</div>`;
+    row.onclick=()=>{selected.has(m.n)?selected.delete(m.n):selected.add(m.n);row.classList.toggle('sel');updateCount();};
+    group.appendChild(row);
+  });
+  updateCount();
+}
+
+function updateCount(){
+  const n=selected.size;
+  document.getElementById('count').textContent=n;
+  document.getElementById('countlbl').textContent=(n<=1?'match sélectionné':'matchs sélectionnés');
+  document.getElementById('download').disabled=n===0;
+  document.getElementById('gbtn').disabled=n===0;
+}
+
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
+
+// ICS helpers
+function z(d){return new Intl.DateTimeFormat('en-CA',{timeZone:'UTC',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).formatToParts(d).reduce((a,p)=>{a[p.type]=p.value;return a;},{});}
+function icsUTC(d){const p=z(d);return `${p.year}${p.month}${p.day}T${p.hour}${p.minute}${p.second}Z`;}
+function esc(s){return s.replace(/[\\,;]/g,m=>'\\'+m);}
+
+function buildICS(){
+  const L=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Damien Van Achter//CDM 2026//FR","CALSCALE:GREGORIAN","METHOD:PUBLISH","X-WR-CALNAME:Coupe du Monde 2026","X-WR-TIMEZONE:Europe/Brussels"];
+  const chosen=matches.filter(m=>selected.has(m.n)).sort((a,b)=>a.dt-b.dt);
+  const stamp=icsUTC(new Date());
+  chosen.forEach(m=>{
+    const end=new Date(m.dt.getTime()+2*3600*1000);
+    const uid=FIXED_UID[m.n]||("cdm2026-m"+m.n+"@mondial.da.van.ac");
+    const sum=`⚽ ${m.home} – ${m.away}`;
+    const watch="https://auvio.rtbf.be/direct";
+    const desc=`Coupe du Monde 2026 — ${m.label}\\n\\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\\n${watch}`;
+    L.push("BEGIN:VEVENT","UID:"+uid,"DTSTAMP:"+stamp,"DTSTART:"+icsUTC(m.dt),"DTEND:"+icsUTC(end),
+      "SUMMARY:"+esc(sum),"LOCATION:"+esc(m.loc),"URL:"+watch,"DESCRIPTION:"+desc,
+      "BEGIN:VALARM","TRIGGER:-PT15M","ACTION:DISPLAY","DESCRIPTION:"+esc(sum)+" dans 15 min","END:VALARM","END:VEVENT");
+  });
+  L.push("END:VCALENDAR");
+  return L.join("\r\n");
+}
+
+function download(){
+  const data=buildICS();
+  const blob=new Blob([data],{type:"text/calendar;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download="coupe-du-monde-2026-mes-matchs.ics";
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1500);
+  toast("✓ "+selected.size+" match(s) exporté(s)");
+}
+
+// liens "ajout direct" par fournisseur — aucun privilégié (Mobilité / Souveraineté)
+const EVT_DESC=m=>`Coupe du Monde 2026 — ${m.label}\n\n📺 En direct sur RTBF Auvio :\nhttps://auvio.rtbf.be/direct`;
+const EVT_TITLE=m=>`⚽ ${m.home} – ${m.away}`;
+const evtEnd=m=>new Date(m.dt.getTime()+2*3600*1000);
+
+function gcalURL(m){
+  const p=new URLSearchParams({action:"TEMPLATE",text:EVT_TITLE(m),dates:`${icsUTC(m.dt)}/${icsUTC(evtEnd(m))}`,details:EVT_DESC(m),location:m.loc});
+  return "https://calendar.google.com/calendar/render?"+p.toString();
+}
+function outlookURL(m,host){
+  const p=new URLSearchParams({path:"/calendar/action/compose",rru:"addevent",subject:EVT_TITLE(m),
+    startdt:m.dt.toISOString(),enddt:evtEnd(m).toISOString(),body:EVT_DESC(m),location:m.loc});
+  return `https://${host}/calendar/0/deeplink/compose?`+p.toString();
+}
+function yahooURL(m){
+  const p=new URLSearchParams({v:"60",title:EVT_TITLE(m),st:icsUTC(m.dt),dur:"0200",desc:EVT_DESC(m),in_loc:m.loc});
+  return "https://calendar.yahoo.com/?"+p.toString();
+}
+const PROVIDERS=[
+  {id:"google",label:"Google",url:m=>gcalURL(m)},
+  {id:"outlook",label:"Outlook.com",url:m=>outlookURL(m,"outlook.live.com")},
+  {id:"office",label:"Outlook 365",url:m=>outlookURL(m,"outlook.office.com")},
+  {id:"yahoo",label:"Yahoo",url:m=>yahooURL(m)},
+];
+let gProvider="google";
+
+function buildProvTabs(){
+  const c=document.getElementById('provtabs');c.innerHTML='';
+  PROVIDERS.forEach(p=>{
+    const b=document.createElement('button');
+    b.textContent=p.label;b.className=(gProvider===p.id?'active':'');
+    b.onclick=()=>{gProvider=p.id;buildProvTabs();buildGList();};
+    c.appendChild(b);
+  });
+}
+function buildGList(){
+  const prov=PROVIDERS.find(p=>p.id===gProvider);
+  const chosen=matches.filter(m=>selected.has(m.n)).sort((a,b)=>a.dt-b.dt);
+  const gl=document.getElementById('glist');gl.innerHTML='';
+  chosen.forEach(m=>{
+    const a=document.createElement('a');
+    a.href=prov.url(m);a.target="_blank";a.rel="noopener";a.className='gi';
+    a.innerHTML=`<span>${fmtTime.format(m.dt)} · ${flag(m.home)} ${m.home} – ${flag(m.away)} ${m.away}</span><span class="add">Ajouter ▸</span>`;
+    gl.appendChild(a);
+  });
+}
+function openAdd(){
+  buildProvTabs();buildGList();
+  document.getElementById('gmodal').classList.add('open');
+}
+
+// presets
+function presetBel(){matches.forEach(m=>{if(m.isBEL)selected.add(m.n);});render();toast("🇧🇪 Diables Rouges ajoutés");}
+function presetTop(){[1,14,38,65,97,98,101,102,104].forEach(n=>selected.add(n));render();toast("⭐ Matchs phares ajoutés");}
+
+document.getElementById('q').addEventListener('input',e=>{filter.q=e.target.value;render();});
+document.getElementById('download').onclick=download;
+document.getElementById('gbtn').onclick=openAdd;
+document.getElementById('gclose').onclick=()=>document.getElementById('gmodal').classList.remove('open');
+document.getElementById('gmodal').onclick=e=>{if(e.target.id==='gmodal')document.getElementById('gmodal').classList.remove('open');};
+document.getElementById('uncheckAll').onclick=()=>{selected.clear();render();};
+document.getElementById('checkVisible').onclick=()=>{matches.filter(passes).forEach(m=>selected.add(m.n));render();toast("✓ Matchs affichés cochés");};
+document.getElementById('presetBel').onclick=presetBel;
+document.getElementById('presetTop').onclick=presetTop;
+
+// drapeaux des 48 nations qualifiées (équipes de phase de groupes, ordre des groupes A→L)
+function renderFlags(){
+  const seen=new Set(),teams=[];
+  matches.filter(m=>m.cat.length===1).sort((a,b)=>a.cat.localeCompare(b.cat)).forEach(m=>{
+    [m.home,m.away].forEach(t=>{if(!seen.has(t)){seen.add(t);teams.push(t);}});
+  });
+  const row=document.getElementById('flagrow');
+  row.innerHTML='';
+  teams.forEach(t=>{
+    const s=document.createElement('span');
+    s.textContent=flag(t)||'🏳️';
+    s.title=t;
+    row.appendChild(s);
+    row.appendChild(document.createTextNode(' '));
+  });
+}
+
+// no match pre-selected — everyone starts from an empty selection
+renderFlags();buildChips();render();
+</script>
+</body>
+</html>
