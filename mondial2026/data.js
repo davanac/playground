@@ -143,6 +143,12 @@ function qualifiedTeams(){
   return out;
 }
 
+// Hôte canonique des .ics d'abonnement (souveraineté : Codeberg). Ne pas changer
+// sans casser les abonnements déjà en place.
+const ICS_BASE = "https://davanac.codeberg.page/playground/mondial2026/ics";
+const icsHttps  = slug => `${ICS_BASE}/${slug}.ics`;
+const icsWebcal = slug => icsHttps(slug).replace(/^https?:/, 'webcal:');
+
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { RAW, FLAGS, FIXED_UID, teamSlug, qualifiedTeams };
+  module.exports = { RAW, FLAGS, FIXED_UID, teamSlug, qualifiedTeams, ICS_BASE, icsHttps, icsWebcal };
 }

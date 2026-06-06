@@ -77,10 +77,17 @@
   @media(max-width:520px){.herorow{gap:12px}.fifa-logo{height:104px}}
   .flagrow{margin-top:16px;font-size:21px;line-height:1.55;letter-spacing:2px;opacity:.92}
   .flagrow span{cursor:default}
-  .sublink{display:flex;align-items:center;justify-content:center;gap:8px;margin:16px 0 0;text-align:center;
+  .sublink{display:block;margin:16px 0 0;text-align:center;
     background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px;color:var(--blue);text-decoration:none;font-weight:700;font-size:13.5px}
   .sublink:hover{border-color:var(--blue)}
   .sublink b{color:var(--txt)}
+  .tabs{border-bottom:1px solid var(--line)}
+  .tabs .wrap{display:flex;gap:6px}
+  .tabs a{flex:1;text-align:center;padding:14px 10px;font-weight:700;font-size:13.5px;color:var(--muted);text-decoration:none;border-bottom:2px solid transparent}
+  .tabs a.active{color:var(--txt);border-bottom-color:var(--green)}
+  .tabs a:hover{color:var(--txt)}
+  .btn.dockicon{background:var(--panel2);color:var(--txt);border:1px solid var(--line);font-size:16px;padding:13px 14px;text-decoration:none;display:inline-flex;align-items:center}
+  .btn.dockicon:hover{border-color:var(--blue)}
   .hero .legal{margin-top:18px;font-size:11.5px;line-height:1.55;color:var(--muted);opacity:.85}
   .hero .legal a{color:var(--blue);text-decoration:none}
   .hero .legal a:hover{text-decoration:underline}
@@ -147,7 +154,9 @@
   /* download bar */
   .dock{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(13,19,32,.94);backdrop-filter:blur(12px);
         border-top:1px solid var(--line);padding:14px 16px}
-  .dock .inner{max-width:920px;margin:0 auto;display:flex;align-items:center;gap:14px}
+  .dock .inner{max-width:920px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+  .dock .cnt{flex:1;min-width:96px}
+  .dock #gbtn,.dock #download{flex:1 1 150px;justify-content:center;text-align:center}
   .count{font-family:'Anton',sans-serif;font-size:30px;line-height:1;color:var(--green)}
   .count small{font-family:'DM Sans';font-size:12px;color:var(--muted);font-weight:600;display:block;margin-top:2px}
   .dock .grow{flex:1}
@@ -217,6 +226,11 @@
   </div>
 </header>
 
+<nav class="tabs"><div class="wrap">
+  <a href="./" class="active" aria-current="page">📅 Composer</a>
+  <a href="abonnement.html">📡 S'abonner</a>
+</div></nav>
+
 <div class="controls">
   <div class="wrap">
     <div class="searchrow">
@@ -236,7 +250,7 @@
 </div>
 
 <div class="wrap">
-  <a class="sublink" href="abonnement.html">📡 Suivre une équipe en continu — <b>s'abonner</b> (le calendrier se met à jour tout seul) ›</a>
+  <a class="sublink" id="teamshort" href="abonnement.html" style="display:none"></a>
 </div>
 
 <main class="wrap" id="list"></main>
@@ -257,11 +271,11 @@
 
 <div class="dock">
   <div class="inner">
-    <div>
+    <div class="cnt">
       <div class="count" id="count">0</div>
       <small id="countlbl">match sélectionné</small>
     </div>
-    <div class="grow"></div>
+    <a class="btn dockicon" href="abonnement.html" aria-label="S'abonner au calendrier d'une équipe" title="S'abonner à une équipe">📡</a>
     <button class="btn dl" id="gbtn" disabled>🔗 Ajouter en ligne</button>
     <button class="btn glink" id="download" disabled>⬇ .ics — tous agendas</button>
   </div>
@@ -367,6 +381,27 @@ function render(){
     group.appendChild(row);
   });
   updateCount();
+  updateTeamShortcut();
+}
+
+// raccourci contextuel : si le filtre cible une seule équipe, proposer de s'y abonner
+function updateTeamShortcut(){
+  const el=document.getElementById('teamshort');
+  let team=null;
+  if(filter.chip==="bel") team="Belgique";
+  else if(filter.chip==="fra") team="France";
+  else if(filter.q.trim()){
+    const q=filter.q.trim().toLowerCase();
+    const hits=qualifiedTeams().filter(t=>t.toLowerCase().includes(q));
+    if(hits.length===1) team=hits[0];
+  }
+  if(team){
+    el.href="abonnement.html#t-"+teamSlug(team);
+    el.innerHTML=`📡 S'abonner au calendrier de ${flag(team)} <b>${team}</b> (mise à jour auto) ›`;
+    el.style.display="";
+  } else {
+    el.style.display="none";
+  }
 }
 
 function updateCount(){

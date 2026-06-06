@@ -25,6 +25,12 @@
   h1{font-family:'Anton',sans-serif;font-weight:400;line-height:.95;letter-spacing:.01em;font-size:clamp(34px,7vw,60px);text-transform:uppercase}
   .sub{color:var(--muted);margin-top:14px;max-width:640px;font-size:14.5px;line-height:1.55}
   .sub b{color:var(--txt)}
+  .tabs{border-bottom:1px solid var(--line)}
+  .tabs .wrap{display:flex;gap:6px}
+  .tabs a{flex:1;text-align:center;padding:14px 10px;font-weight:700;font-size:13.5px;color:var(--muted);text-decoration:none;border-bottom:2px solid transparent}
+  .tabs a.active{color:var(--txt);border-bottom-color:var(--green)}
+  .tabs a:hover{color:var(--txt)}
+  .team:target{border-color:var(--green);box-shadow:0 0 0 2px rgba(79,182,141,.35)}
   h2{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.02em;font-size:20px;margin:30px 0 12px;border-left:3px solid var(--pink);padding-left:10px}
   .search{display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-top:18px}
   .search input{flex:1;background:none;border:none;color:var(--txt);font-size:15px;outline:none;font-family:inherit}
@@ -68,6 +74,11 @@
   </div>
 </header>
 
+<nav class="tabs"><div class="wrap">
+  <a href="./">📅 Composer</a>
+  <a href="abonnement.html" class="active" aria-current="page">📡 S'abonner</a>
+</div></nav>
+
 <main class="wrap">
   <h2>Tous les matchs</h2>
   <div class="preset">
@@ -97,10 +108,8 @@
 
 <script src="data.js"></script>
 <script>
-// Hôte canonique des .ics d'abonnement (souveraineté : Codeberg)
-const ICS_BASE = "https://davanac.codeberg.page/playground/mondial2026/ics";
-const httpsURL = slug => `${ICS_BASE}/${slug}.ics`;
-const webcalURL = slug => httpsURL(slug).replace(/^https?:/, 'webcal:');
+// helpers d'URL partagés depuis data.js (ICS_BASE, icsHttps, icsWebcal)
+const httpsURL = icsHttps, webcalURL = icsWebcal;
 
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
 async function copy(url){try{await navigator.clipboard.writeText(url);toast('✓ URL copiée');}catch(e){prompt('Copie cette URL :',url);}}
@@ -116,7 +125,7 @@ const teams = qualifiedTeams();
 teams.forEach(team=>{
   const slug = teamSlug(team), n = countFor(team);
   const row = document.createElement('div');
-  row.className='team'; row.dataset.name=team.toLowerCase();
+  row.className='team'; row.id='t-'+slug; row.dataset.name=team.toLowerCase();
   row.innerHTML = `<span class="fl" aria-hidden="true">${FLAGS[team]||'🏳️'}</span>
     <span class="nm">${team}<small>${n} match${n>1?'s':''}${team==='Belgique'?' · Diables Rouges':''}</small></span>
     <span class="act">
