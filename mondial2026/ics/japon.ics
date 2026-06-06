@@ -1,0 +1,55 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Damien Van Achter//CDM 2026//FR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:CDM 2026 — Japon
+X-WR-TIMEZONE:Europe/Brussels
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VEVENT
+UID:cdm2026-m10@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260614T200000Z
+DTEND:20260614T220000Z
+SUMMARY:⚽ Pays-Bas – Japon
+LOCATION:Arlington\, USA
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe F\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Pays-Bas – Japon dans 15 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cdm2026-m36@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260621T040000Z
+DTEND:20260621T060000Z
+SUMMARY:⚽ Tunisie – Japon
+LOCATION:Guadalupe\, Mexique
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe F\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Tunisie – Japon dans 15 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cdm2026-m58@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260625T230000Z
+DTEND:20260626T010000Z
+SUMMARY:⚽ Japon – Suède
+LOCATION:Arlington\, USA
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe F\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Japon – Suède dans 15 min
+END:VALARM
+END:VEVENT
+END:VCALENDAR

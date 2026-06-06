@@ -1,0 +1,55 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Damien Van Achter//CDM 2026//FR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:CDM 2026 — Turquie
+X-WR-TIMEZONE:Europe/Brussels
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VEVENT
+UID:cdm2026-m8@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260614T040000Z
+DTEND:20260614T060000Z
+SUMMARY:⚽ Australie – Turquie
+LOCATION:Vancouver\, Canada
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe D\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Australie – Turquie dans 15 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cdm2026-m32@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260620T030000Z
+DTEND:20260620T050000Z
+SUMMARY:⚽ Turquie – Paraguay
+LOCATION:Santa Clara\, USA
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe D\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Turquie – Paraguay dans 15 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cdm2026-m59@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260626T020000Z
+DTEND:20260626T040000Z
+SUMMARY:⚽ Turquie – États-Unis
+LOCATION:Los Angeles\, USA
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe D\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Turquie – États-Unis dans 15 min
+END:VALARM
+END:VEVENT
+END:VCALENDAR

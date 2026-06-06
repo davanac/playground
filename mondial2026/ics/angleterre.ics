@@ -1,0 +1,55 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Damien Van Achter//CDM 2026//FR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:CDM 2026 — Angleterre
+X-WR-TIMEZONE:Europe/Brussels
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VEVENT
+UID:cdm2026-m22@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260617T200000Z
+DTEND:20260617T220000Z
+SUMMARY:⚽ Angleterre – Croatie
+LOCATION:Arlington\, USA
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe L\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Angleterre – Croatie dans 15 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cdm2026-m46@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260623T200000Z
+DTEND:20260623T220000Z
+SUMMARY:⚽ Angleterre – Ghana
+LOCATION:Foxborough\, USA
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe L\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Angleterre – Ghana dans 15 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cdm2026-m67@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260627T210000Z
+DTEND:20260627T230000Z
+SUMMARY:⚽ Panama – Angleterre
+LOCATION:New Jersey\, USA
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe L\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Panama – Angleterre dans 15 min
+END:VALARM
+END:VEVENT
+END:VCALENDAR

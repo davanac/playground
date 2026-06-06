@@ -1,0 +1,55 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Damien Van Achter//CDM 2026//FR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:CDM 2026 — Norvège
+X-WR-TIMEZONE:Europe/Brussels
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VEVENT
+UID:cdm2026-m18@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260616T220000Z
+DTEND:20260617T000000Z
+SUMMARY:⚽ Irak – Norvège
+LOCATION:Foxborough\, USA
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe I\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Irak – Norvège dans 15 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cdm2026-m43@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260623T000000Z
+DTEND:20260623T020000Z
+SUMMARY:⚽ Norvège – Sénégal
+LOCATION:Toronto\, Canada
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe I\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Norvège – Sénégal dans 15 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cdm2026-m61@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260626T190000Z
+DTEND:20260626T210000Z
+SUMMARY:⚽ Norvège – France
+LOCATION:Foxborough\, USA
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe I\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Norvège – France dans 15 min
+END:VALARM
+END:VEVENT
+END:VCALENDAR

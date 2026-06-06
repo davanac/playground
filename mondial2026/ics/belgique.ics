@@ -1,0 +1,55 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Damien Van Achter//CDM 2026//FR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:CDM 2026 — Belgique
+X-WR-TIMEZONE:Europe/Brussels
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VEVENT
+UID:cdm2026-bel-egy@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260615T190000Z
+DTEND:20260615T210000Z
+SUMMARY:⚽ Belgique – Égypte
+LOCATION:Seattle\, USA
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe G\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Belgique – Égypte dans 15 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cdm2026-bel-irn@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260621T190000Z
+DTEND:20260621T210000Z
+SUMMARY:⚽ Belgique – Iran
+LOCATION:Los Angeles\, USA
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe G\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Belgique – Iran dans 15 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cdm2026-nzl-bel@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260627T030000Z
+DTEND:20260627T050000Z
+SUMMARY:⚽ Nouvelle-Zélande – Belgique
+LOCATION:Vancouver\, Canada
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe G\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Nouvelle-Zélande – Belgique dans 15 min
+END:VALARM
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,55 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Damien Van Achter//CDM 2026//FR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:CDM 2026 — Brésil
+X-WR-TIMEZONE:Europe/Brussels
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VEVENT
+UID:cdm2026-m6@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260613T220000Z
+DTEND:20260614T000000Z
+SUMMARY:⚽ Brésil – Maroc
+LOCATION:New Jersey\, USA
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe C\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Brésil – Maroc dans 15 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cdm2026-m31@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260620T003000Z
+DTEND:20260620T023000Z
+SUMMARY:⚽ Brésil – Haïti
+LOCATION:Philadelphie\, USA
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe C\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Brésil – Haïti dans 15 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cdm2026-m52@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260624T220000Z
+DTEND:20260625T000000Z
+SUMMARY:⚽ Écosse – Brésil
+LOCATION:Miami\, USA
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe C\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Écosse – Brésil dans 15 min
+END:VALARM
+END:VEVENT
+END:VCALENDAR

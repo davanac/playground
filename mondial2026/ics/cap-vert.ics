@@ -1,0 +1,55 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Damien Van Achter//CDM 2026//FR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:CDM 2026 — Cap-Vert
+X-WR-TIMEZONE:Europe/Brussels
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VEVENT
+UID:cdm2026-m13@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260615T160000Z
+DTEND:20260615T180000Z
+SUMMARY:⚽ Espagne – Cap-Vert
+LOCATION:Atlanta\, USA
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe H\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Espagne – Cap-Vert dans 15 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cdm2026-m39@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260621T220000Z
+DTEND:20260622T000000Z
+SUMMARY:⚽ Uruguay – Cap-Vert
+LOCATION:Miami\, USA
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe H\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Uruguay – Cap-Vert dans 15 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cdm2026-m63@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260627T000000Z
+DTEND:20260627T020000Z
+SUMMARY:⚽ Cap-Vert – Arabie saoudite
+LOCATION:Houston\, USA
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe H\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Cap-Vert – Arabie saoudite dans 15 min
+END:VALARM
+END:VEVENT
+END:VCALENDAR

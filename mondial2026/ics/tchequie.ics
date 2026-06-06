@@ -1,0 +1,55 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Damien Van Achter//CDM 2026//FR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:CDM 2026 — Tchéquie
+X-WR-TIMEZONE:Europe/Brussels
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VEVENT
+UID:cdm2026-m2@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260612T020000Z
+DTEND:20260612T040000Z
+SUMMARY:⚽ Corée du Sud – Tchéquie
+LOCATION:Zapopan\, Mexique
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe A\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Corée du Sud – Tchéquie dans 15 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cdm2026-m25@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260618T160000Z
+DTEND:20260618T180000Z
+SUMMARY:⚽ Tchéquie – Afrique du Sud
+LOCATION:Atlanta\, USA
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe A\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Tchéquie – Afrique du Sud dans 15 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cdm2026-m54@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260625T010000Z
+DTEND:20260625T030000Z
+SUMMARY:⚽ Tchéquie – Mexique
+LOCATION:Mexico\, Mexique
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe A\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Tchéquie – Mexique dans 15 min
+END:VALARM
+END:VEVENT
+END:VCALENDAR

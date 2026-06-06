@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0E3556">
+<link rel="icon" type="image/png" href="favicon.png">
+<title>S'abonner — Coupe du Monde 2026</title>
+<meta name="description" content="Abonne-toi au calendrier d'une équipe de la Coupe du Monde 2026 : il se met à jour tout seul au fil du tournoi (matchs à élimination directe inclus). Aucun compte, aucun tracker.">
+<style>
+  @font-face{font-family:'Anton';font-style:normal;font-weight:400;font-display:swap;
+    src:url(fonts/anton-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2122,U+2212,U+FEFF;}
+  @font-face{font-family:'DM Sans';font-style:normal;font-weight:100 1000;font-display:swap;
+    src:url(fonts/dmsans-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2122,U+2212,U+FEFF;}
+  :root{--navy:#0E3556;--bg:#0a2a44;--panel:#0E3556;--panel2:#0c304e;--line:#1c4a6c;
+    --txt:#eef4fa;--muted:#8ea8c0;--ink:#082033;--blue:#179FCD;--green:#4FB68D;--yellow:#F1C26F;--pink:#DC3E55;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased}
+  body{background-image:radial-gradient(900px 500px at 90% -10%,rgba(23,159,205,.12),transparent 60%),radial-gradient(700px 500px at -10% 10%,rgba(220,62,85,.10),transparent 55%);padding-bottom:60px}
+  .wrap{max-width:920px;margin:0 auto;padding:0 16px}
+  header.hero{padding:30px 0 18px;border-bottom:1px solid var(--line)}
+  .back{display:inline-block;color:var(--muted);text-decoration:none;font-size:13px;margin-bottom:14px}
+  .back:hover{color:var(--blue)}
+  .kicker{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--green);font-weight:700;margin-bottom:8px}
+  h1{font-family:'Anton',sans-serif;font-weight:400;line-height:.95;letter-spacing:.01em;font-size:clamp(34px,7vw,60px);text-transform:uppercase}
+  .sub{color:var(--muted);margin-top:14px;max-width:640px;font-size:14.5px;line-height:1.55}
+  .sub b{color:var(--txt)}
+  h2{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.02em;font-size:20px;margin:30px 0 12px;border-left:3px solid var(--pink);padding-left:10px}
+  .search{display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-top:18px}
+  .search input{flex:1;background:none;border:none;color:var(--txt);font-size:15px;outline:none;font-family:inherit}
+  .search input::placeholder{color:var(--muted)}
+  .grid{display:grid;grid-template-columns:1fr;gap:8px}
+  @media(min-width:620px){.grid{grid-template-columns:1fr 1fr}}
+  .team{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:11px 14px}
+  .team .fl{font-size:22px;line-height:1}
+  .team .nm{flex:1;min-width:0;font-weight:600;font-size:15px}
+  .team .nm small{display:block;color:var(--muted);font-weight:500;font-size:11.5px;margin-top:2px}
+  .team .act{display:flex;gap:6px;flex:none}
+  .btn{font-family:inherit;font-weight:700;font-size:12.5px;border:none;border-radius:10px;padding:9px 12px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center}
+  .btn.sub{background:var(--green);color:var(--ink)}
+  .btn.sub:hover{filter:brightness(1.05)}
+  .btn.copy{background:var(--panel2);color:var(--txt);border:1px solid var(--line)}
+  .btn.copy:hover{border-color:var(--blue)}
+  .preset{background:var(--panel2);border:1px dashed var(--line);border-radius:13px;padding:14px;margin-top:6px;display:flex;align-items:center;gap:12px}
+  .preset .nm{flex:1;font-weight:700}
+  .preset .nm small{display:block;color:var(--muted);font-weight:500;font-size:11.5px;margin-top:2px}
+  details.help{margin:24px 0 0;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:4px 16px}
+  details.help summary{cursor:pointer;padding:12px 0;font-weight:700;font-size:14px;color:var(--blue)}
+  details.help p{color:var(--muted);font-size:13.5px;line-height:1.6;padding:0 0 10px}
+  details.help b{color:var(--txt)}
+  .note{color:var(--muted);font-size:12px;line-height:1.5;margin-top:18px;opacity:.9}
+  .note b{color:var(--txt)}
+  .toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--txt);color:var(--ink);font-weight:700;font-size:13px;padding:11px 18px;border-radius:11px;transition:.3s;z-index:60;pointer-events:none}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  a{color:var(--blue)}
+  :focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:8px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <a class="back" href="./">‹ Retour au calendrier</a>
+    <div class="kicker">Coupe du Monde 2026 · abonnement</div>
+    <h1>S'abonner à une équipe</h1>
+    <p class="sub">Abonne-toi au calendrier d'une équipe : il s'ajoute à ton agenda et <b>se met à jour tout seul</b> au fil du tournoi. Quand une équipe se qualifie, ses matchs à élimination directe <b>apparaissent automatiquement</b> — pas de réimport. <b>Aucun compte, aucun tracker.</b></p>
+    <div class="search"><span aria-hidden="true" style="color:var(--muted)">🔎</span><input id="q" type="text" aria-label="Rechercher une équipe" placeholder="Rechercher une équipe…"></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <h2>Tous les matchs</h2>
+  <div class="preset">
+    <span class="fl" aria-hidden="true" style="font-size:22px">🏆</span>
+    <span class="nm">Tous les matchs<small id="allcount"></small></span>
+    <span class="act">
+      <a class="btn sub" data-slug="tous-les-matchs" href="#">S'abonner</a>
+      <button class="btn copy" data-slug="tous-les-matchs">Copier l'URL</button>
+    </span>
+  </div>
+
+  <h2>Par équipe</h2>
+  <div class="grid" id="grid"></div>
+
+  <details class="help">
+    <summary>Comment ça marche selon mon agenda&nbsp;?</summary>
+    <p><b>Apple Calendar (iPhone / Mac)</b> : appuie sur <b>S'abonner</b> → Calendrier propose d'ajouter l'abonnement. Sur Mac, tu peux régler la fréquence d'actualisation.</p>
+    <p><b>Google Agenda</b> (ordinateur) : <b>Copier l'URL</b>, puis dans Google Agenda → <b>Autres agendas</b> (le +) → <b>À partir de l'URL</b> → colle l'URL → <b>Ajouter</b>. ⚠️ Google rafraîchit les abonnements <b>lentement</b> (souvent 12–24 h) : un nouveau match de phase finale peut mettre jusqu'à une journée à apparaître.</p>
+    <p><b>Outlook</b> : <b>Ajouter un calendrier</b> → <b>S'abonner à partir du Web</b> → colle l'URL copiée.</p>
+    <p>Différence avec le <a href="./">téléchargement .ics</a> : un fichier téléchargé est figé ; un <b>abonnement</b> se met à jour tout seul. Idéal pour suivre une équipe sans savoir jusqu'où elle ira.</p>
+  </details>
+
+  <p class="note">Les fichiers d'abonnement sont hébergés sur <b>Codeberg</b> (forge européenne associative) : <span id="hosthint"></span>. Aucun compte requis, aucun pisteur. Avant la fin des poules, le calendrier d'une équipe contient ses 3 matchs de groupe ; ses matchs à élimination directe s'y ajoutent au fil de sa qualification.</p>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="data.js"></script>
+<script>
+// Hôte canonique des .ics d'abonnement (souveraineté : Codeberg)
+const ICS_BASE = "https://davanac.codeberg.page/playground/mondial2026/ics";
+const httpsURL = slug => `${ICS_BASE}/${slug}.ics`;
+const webcalURL = slug => httpsURL(slug).replace(/^https?:/, 'webcal:');
+
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
+async function copy(url){try{await navigator.clipboard.writeText(url);toast('✓ URL copiée');}catch(e){prompt('Copie cette URL :',url);}}
+
+function countFor(team){return RAW.filter(r=>r[3]===team||r[4]===team).length;}
+
+// presets + délégation des actions
+document.getElementById('allcount').textContent = ` · ${RAW.length} matchs`;
+document.getElementById('hosthint').textContent = `${ICS_BASE}/<équipe>.ics`;
+
+const grid = document.getElementById('grid');
+const teams = qualifiedTeams();
+teams.forEach(team=>{
+  const slug = teamSlug(team), n = countFor(team);
+  const row = document.createElement('div');
+  row.className='team'; row.dataset.name=team.toLowerCase();
+  row.innerHTML = `<span class="fl" aria-hidden="true">${FLAGS[team]||'🏳️'}</span>
+    <span class="nm">${team}<small>${n} match${n>1?'s':''}${team==='Belgique'?' · Diables Rouges':''}</small></span>
+    <span class="act">
+      <a class="btn sub" data-slug="${slug}" href="${webcalURL(slug)}">S'abonner</a>
+      <button class="btn copy" data-slug="${slug}">Copier l'URL</button>
+    </span>`;
+  grid.appendChild(row);
+});
+
+// liens "S'abonner" : on laisse le navigateur ouvrir webcal:// (déjà dans href)
+document.querySelectorAll('a.btn.sub').forEach(a=>{
+  a.addEventListener('click',()=>{ a.href = webcalURL(a.dataset.slug); });
+});
+document.querySelectorAll('button.btn.copy').forEach(b=>{
+  b.addEventListener('click',()=>copy(httpsURL(b.dataset.slug)));
+});
+
+// recherche
+document.getElementById('q').addEventListener('input',e=>{
+  const q=e.target.value.toLowerCase().trim();
+  document.querySelectorAll('#grid .team').forEach(r=>{
+    r.style.display = !q || r.dataset.name.includes(q) ? '' : 'none';
+  });
+});
+</script>
+</body>
+</html>

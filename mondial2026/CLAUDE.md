@@ -8,7 +8,8 @@ Une **page web statique unique** (`index.html`) qui liste les **104 matchs de la
 
 ## 2. Contraintes techniques (à respecter absolument)
 
-- **Vanilla only** : `index.html` (HTML + CSS + JS inline) + dossier `fonts/` (woff2 auto-hébergés). **Zéro dépendance, zéro build, zéro framework, zéro backend.** **Aucune ressource tierce au chargement** : les polices Anton + DM Sans sont auto-hébergées (`@font-face` → `fonts/*.woff2`, sous-ensembles latin + latin-ext), conformément au pilier **Souveraineté** de la charte FLTR. Ne PAS réintroduire de `<link>` Google Fonts. Liens externes (RTBF Auvio, Google Agenda, GitHub) uniquement sur clic utilisateur.
+- **Vanilla, mais plus tout-en-un (depuis V2)** : `index.html` + `abonnement.html` + `data.js` (source de données partagée) + `fonts/` (woff2 auto-hébergés) + `ics/` (calendriers d'abonnement générés) + `build-ics.mjs` (générateur Node, exécuté **hors ligne** avant déploiement — le site servi reste 100 % statique). **Zéro dépendance front, zéro framework, zéro backend.** **Aucune ressource tierce au chargement** : polices Anton + DM Sans auto-hébergées (`@font-face` → `fonts/*.woff2`), conformément au pilier **Souveraineté**. Ne PAS réintroduire de `<link>` Google Fonts. Liens externes (RTBF Auvio, agendas en ligne, GitHub) uniquement sur clic.
+- ⚠️ **`data.js` = source de données UNIQUE** (`RAW`, `FLAGS`, `FIXED_UID`, `teamSlug`, `qualifiedTeams`). Chargé en `<script src>` par les deux pages (scope global navigateur) ET via `module.exports` par `build-ics.mjs` (Node). Ne JAMAIS dupliquer les données dans `index.html`. C'est un `<script src>` (pas un `fetch`) → le double-clic local marche toujours.
 - **Aucun stockage navigateur** (`localStorage`/`sessionStorage` interdits). L'état de sélection vit en mémoire (`Set` JS) le temps de la session.
 - **Aucune donnée personnelle ni tracker.** Pas d'analytics par défaut (cohérent avec la ligne « souveraineté numérique »).
 - La page doit rester **100 % fonctionnelle en ouvrant le fichier en local** (double-clic) comme servie en HTTPS.
@@ -24,6 +25,13 @@ Une **page web statique unique** (`index.html`) qui liste les **104 matchs de la
 - `FIXED_UID` : UIDs d'événements stables pour quelques matchs (voir §5, à neutraliser pour le public).
 - Fonctions clés : `render()` (liste + filtres), `buildICS()` + `download()` (`.ics` universel — voie **principale et recommandée**, tous agendas, sans compte), `openAdd()` + modale multi-fournisseurs.
 - **Ajout en ligne multi-agendas** (Mobilité / Souveraineté — aucun fournisseur privilégié) : tableau `PROVIDERS` = Google (`gcalURL`), Outlook.com + Outlook 365 (`outlookURL(m,host)`, deeplink ISO), Yahoo (`yahooURL`, `st`+`dur`). Onglets `#provtabs` (`gProvider`, `buildProvTabs()`), liste régénérée par `buildGList()`. Apple/Proton/Thunderbird → passent par le `.ics`. Helpers communs : `EVT_TITLE`/`EVT_DESC`/`evtEnd`.
+
+### V2 — Abonnements ICS dynamiques (`abonnement.html` + `build-ics.mjs` + `ics/`)
+- **Principe** : un abonnement calendrier = l'app refait un GET périodique sur une URL `.ics` statique. On héberge un `.ics` par équipe (+ `tous-les-matchs.ics`) ; quand on régénère + pousse, les agendas abonnés se mettent à jour seuls (les matchs KO d'une équipe apparaissent dès sa qualification).
+- **`build-ics.mjs`** (Node) : lit `data.js`, écrit `ics/<slug>.ics` (un par équipe qualifiée + preset « tous »). UIDs stables (`FIXED_UID` / `cdm2026-m{n}@mondial.da.van.ac`), VALARM -15 min, en-têtes d'abonnement `REFRESH-INTERVAL`/`X-PUBLISHED-TTL: PT12H`. Régénération propre : le dossier `ics/` est vidé puis réécrit.
+- **`abonnement.html`** : liste les 48 équipes (via `qualifiedTeams()`/`teamSlug`), bouton **S'abonner** (`webcal://…`) + **Copier l'URL** (`https://…`). Hôte canonique des `.ics` = **Codeberg** (`ICS_BASE`), par souveraineté (abonnement = requêtes périodiques → on préfère que ce soit la forge associative qui voie les IP, pas GitHub/MS).
+- **Limite assumée** : Google Agenda rafraîchit lentement les abonnements (12–24 h). Apple/Outlook : OK. Documenté dans la page.
+- **Régénérer** : `node build-ics.mjs` puis commit + push (voir §6 : pousser `main` sur les 2 forges **et** rafraîchir la branche `pages` de Codeberg, sinon les abonnés Codeberg ne voient pas la maj).
 
 ### Source des données
 Calendrier UK : Sky Sports (« World Cup 2026 fixture schedule and UK kick-off times »). Horaires belges vérifiés sur les matchs des Diables (RTBF / FotMob). **Règle de conversion : heure belge = heure UK + 1 h.**
@@ -92,7 +100,13 @@ NB partage : les balises `og:image`/`canonical` pointent vers l'URL **GitHub** (
 
 ## 7. Maintenance des données pendant le tournoi
 
-À mesure que les groupes se terminent, les libellés des phases finales (`"Vainq. Gr. G"`, `"3e (A/E/H/I/J)"`, `"Vainq. M89"`…) deviennent de vraies équipes. Mettre à jour les entrées correspondantes du tableau `RAW` (colonnes domicile/extérieur) **sans changer `n`** pour préserver les UIDs. Les dates/heures/stades des KO sont déjà fermes.
+À mesure que les groupes se terminent, les libellés des phases finales (`"Vainq. Gr. G"`, `"3e (A/E/H/I/J)"`, `"Vainq. M89"`…) deviennent de vraies équipes. Procédure à chaque palier :
+
+1. Éditer **`data.js`** (et lui seul) : colonnes domicile/extérieur des lignes KO concernées, **sans changer `n`** (préserve les UIDs). Dates/heures/stades des KO sont déjà fermes.
+2. **Régénérer les abonnements** : `node build-ics.mjs` (réécrit `ics/`). Les nouveaux matchs d'une équipe arrivent dans son `.ics` → les abonnés se mettent à jour seuls.
+3. **Pousser** : `git push origin main` (GitHub + Codeberg) **puis** `git push git@codeberg.org:davanac/playground.git main:pages` (sinon abonnés Codeberg non maj).
+
+Paliers : fin poules ~27/06 → 16es (n°73-88) ; puis 8es (89-96), quarts (97-100), demis (101-102), finale+3e (103-104).
 
 ## 8. Conventions
 

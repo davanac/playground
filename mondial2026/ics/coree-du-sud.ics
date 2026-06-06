@@ -1,0 +1,55 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Damien Van Achter//CDM 2026//FR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:CDM 2026 — Corée du Sud
+X-WR-TIMEZONE:Europe/Brussels
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VEVENT
+UID:cdm2026-m2@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260612T020000Z
+DTEND:20260612T040000Z
+SUMMARY:⚽ Corée du Sud – Tchéquie
+LOCATION:Zapopan\, Mexique
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe A\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Corée du Sud – Tchéquie dans 15 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cdm2026-m28@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260619T010000Z
+DTEND:20260619T030000Z
+SUMMARY:⚽ Mexique – Corée du Sud
+LOCATION:Zapopan\, Mexique
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe A\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Mexique – Corée du Sud dans 15 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cdm2026-m53@mondial.da.van.ac
+DTSTAMP:20260606T110002Z
+DTSTART:20260625T010000Z
+DTEND:20260625T030000Z
+SUMMARY:⚽ Afrique du Sud – Corée du Sud
+LOCATION:Guadalupe\, Mexique
+URL:https://auvio.rtbf.be/direct
+DESCRIPTION:Coupe du Monde 2026 — Groupe A\n\n📺 Regarder en direct sur RTBF Auvio (gratuit · La Une / Tipik) :\nhttps://auvio.rtbf.be/direct
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:⚽ Afrique du Sud – Corée du Sud dans 15 min
+END:VALARM
+END:VEVENT
+END:VCALENDAR
