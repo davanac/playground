@@ -38,7 +38,7 @@ Calendrier UK : Sky Sports (« World Cup 2026 fixture schedule and UK kick-off t
 
 ## 4. Charte graphique dvnc — APPLIQUÉE
 
-**Source de vérité de la charte** : `~/GitHub/FLTR/design-system/` (README.txt + `/logo` + `/dots`). C'est le kit identité officiel « dvnc ». Toujours s'y référer avant de toucher au design.
+**Source de vérité de la charte** : `~/lab/FLTR/design-system/` (README.txt + `/logo` + `/dots`). C'est le kit identité officiel « dvnc ». Toujours s'y référer avant de toucher au design.
 
 Palette de marque appliquée dans les `:root{--...}` (juin 2026) :
 - `--navy:#0E3556` — couleur de marque (wordmark & 5e point / Solidarité), sert de base au thème sombre.
